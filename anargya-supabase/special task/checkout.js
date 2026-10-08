@@ -82,14 +82,12 @@
     }
   });
 
-  // tampilkan ringkasan langsung dari keranjang lokal (tidak menunggu database)
   const last = Store.localOrders().find(o => o.id === sessionStorage.getItem('anargya_last_order'));
   if (!Store.cart().length) {
     wrap.hidden = true;
     if (last) showDone(last); else empty.hidden = false;
   } else {
     renderSummary();
-    // lalu segarkan harga/stok dari Supabase di latar belakang
     Store.init().then(renderSummary).catch(e => console.error(e));
   }
 })();

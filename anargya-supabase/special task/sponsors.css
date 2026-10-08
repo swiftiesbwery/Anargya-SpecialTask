@@ -1,7 +1,5 @@
-/* ===== section sponsors di home: hero foto + latar putih + 2 baris berjalan otomatis ===== */
 .sp-section { background: #fff; }
 
-/* hero: judul hijau ala Hall of Fame, foto berwarna yang memudar ke putih di bawah */
 .sp-hero {
   --ac: #19a574;
   position: relative; display: grid; justify-items: center; gap: 22px; text-align: center; overflow: hidden;
@@ -9,14 +7,14 @@
   background: #fff var(--img) center top / cover no-repeat;
   color: #fff;
 }
-/* gelapkan foto sedikit supaya teks putih terbaca */
+
 .sp-hero::before {
   content: ""; position: absolute; inset: 0; z-index: 0;
   background:
     linear-gradient(#070707, rgba(7, 7, 7, 0) clamp(100px, 16vw, 200px)),
     linear-gradient(rgba(0, 0, 0, .55), rgba(0, 0, 0, .3));
 }
-/* memudar ke putih di bagian bawah, menyatu dengan area logo */
+
 .sp-hero::after {
   content: ""; position: absolute; left: 0; right: 0; bottom: -1px; height: 55%; z-index: 0;
   background: linear-gradient(rgba(255, 255, 255, 0), #fff 92%);
@@ -25,10 +23,8 @@
 .sp-hero .car-title { margin-bottom: 0; }
 .sp-hero p { max-width: 640px; margin: 0; font-size: clamp(1rem, 1.6vw, 1.2rem); line-height: 1.6; color: #fff; text-shadow: 0 1px 10px rgba(0, 0, 0, .7); }
 
-/* area logo: putih penuh */
 .sp-wrap { background: #fff; padding: 0 0 clamp(56px, 8vw, 110px); }
 
-/* 2 baris yang berjalan sendiri (baris 2 arah sebaliknya), berhenti saat di-hover */
 .sp-row {
   overflow: hidden;
   padding: 14px 0 30px;
@@ -64,7 +60,7 @@
   .sp-track { animation-duration: 45s; }
   .sp-row.rtl .sp-track { animation-duration: 50s; }
 }
-/* kalau user mematikan animasi: berhenti jalan, tapi baris tetap bisa digeser manual */
+
 @media (prefers-reduced-motion: reduce) {
   .sp-card { transition: none; }
   .sp-track { animation: none; }

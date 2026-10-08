@@ -18,7 +18,6 @@ const CORE = [
 ];
 
 self.addEventListener('install', e => {
-  // cache: 'reload' supaya file baru tidak diambil dari cache HTTP browser yang basi
   e.waitUntil(
     caches.open(VERSION)
       .then(c => Promise.allSettled(CORE.map(u => c.add(new Request(u, { cache: 'reload' })))))
@@ -40,7 +39,6 @@ self.addEventListener('fetch', e => {
   if (url.protocol !== 'http:' && url.protocol !== 'https:') return;
   if (req.destination === 'video' || /\.(mp4|webm)$/i.test(url.pathname) || req.headers.has('range')) return;
 
-  // halaman: jaringan dulu; kalau offline pakai cache (abaikan ?query) atau halaman offline
   if (req.mode === 'navigate') {
     e.respondWith(
       fetch(req)
@@ -53,7 +51,6 @@ self.addEventListener('fetch', e => {
     return;
   }
 
-  // aset lain: tampilkan cache dulu, perbarui di belakang
   e.respondWith(
     caches.match(req).then(cached => {
       const net = fetch(req).then(res => {

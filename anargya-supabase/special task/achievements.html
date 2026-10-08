@@ -14,6 +14,7 @@
   <link rel="stylesheet" href="logo.css">
   <link rel="stylesheet" href="footer-wordmark.css">
   <link rel="stylesheet" href="ach-hero.css">
+  <link rel="stylesheet" href="loader.css">
 </head>
 <body>
 
@@ -31,9 +32,8 @@
 
 <main class="achpage">
 
-  <!-- HERO gaya Sapuangin, versi Anargya -->
   <section class="ach-top">
-    <!-- Foto hero: taruh di assets/ach/hero.jpg (hitam putih + fade diurus CSS) -->
+
     <div class="ach-top-bg" style="--img:url(assets/ach/hero.jpg)"></div>
 
     <div class="ach-top-inner">
@@ -51,12 +51,10 @@
     <a class="ach-cta" href="#hall">Hall of Fame</a>
   </section>
 
-  <!-- Filter (hero lama, sekarang cuma baris filter) -->
   <section class="ach-hero" id="hall">
     <div class="filters"><button class="on" data-year="all">All</button><button data-year="2026">2026</button><button data-year="2025">2025</button><button data-year="2024">2024</button><button data-year="2023">2023</button></div>
   </section>
 
-  <!-- Foto: taruh file di assets/ach/ dengan nama sesuai url() di tiap kartu -->
   <section class="ach-grid">
     <article class="ach-card" data-year="2026">
       <div class="ach-photo cham hl" style="--img:url(assets/ach/01-three-view-drawing-2026.jpg)"><span class="rank-tag">1st</span></div>
@@ -134,5 +132,6 @@
 </div>
 
 <script src="script.js"></script>
+<script src="loader.js"></script>
 </body>
 </html>

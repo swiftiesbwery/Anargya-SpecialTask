@@ -1,14 +1,5 @@
 (() => {
-  /* ------------------------------------------------------------------
-     RECAP EDITION SEBELUMNYA
-     Isi daftar di bawah, satu objek per tahun. Kalau kosong, bagian
-     "Previous editions" otomatis disembunyikan.
 
-     Contoh:
-     { year: '2023', title: 'Anargya Academy 2023',
-       desc: 'Ringkasan kegiatan tahun itu.',
-       stats: [{ k: 'Participants', v: '120' }, { k: 'Tracks', v: 'Mechanical, Electrical' }] }
-  ------------------------------------------------------------------ */
   const EDITIONS = [];
 
   const el = (tag, cls, text) => {
@@ -42,7 +33,6 @@
     recap.hidden = false;
   }
 
-  /* muncul pelan saat di-scroll */
   const items = document.querySelectorAll('.reveal');
   if ('IntersectionObserver' in window) {
     const io = new IntersectionObserver(entries => {

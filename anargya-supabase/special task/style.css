@@ -44,7 +44,6 @@ button { font: inherit; color: inherit; }
 
 .top, .content, .counter, .dots { position: relative; z-index: 2; }
 
-/* header */
 .top {
   display: grid;
   grid-template-columns: 1fr auto 1fr;
@@ -84,7 +83,6 @@ button { font: inherit; color: inherit; }
   background: rgba(255, 255, 255, .12);
 }
 
-/* hero content */
 .content {
   flex: 1;
   display: flex;
@@ -153,7 +151,6 @@ button { font: inherit; color: inherit; }
   margin-bottom: -8px;
 }
 
-/* indikator slide: dot + cincin progres hijau */
 .dots {
   display: flex;
   justify-content: center;
@@ -199,7 +196,6 @@ button { font: inherit; color: inherit; }
   outline-offset: 3px;
 }
 
-/* menu overlay */
 .menu {
   position: fixed; inset: 0;
   z-index: 10;
@@ -229,7 +225,6 @@ button { font: inherit; color: inherit; }
   .swap { animation: none; }
 }
 
-/* ===== versi scroll: hero rata kiri + section luxury ===== */
 :root { --ivory: #ece7da; --racing: #0e2b21; --ash: #8c8b86; --line: #2a2a2a; --c: 12px; }
 html { scroll-behavior: smooth; }
 body { background: #080808; }
@@ -295,7 +290,6 @@ main p { color: #a7a59d; line-height: 1.7; max-width: 32em; }
   .dots { bottom: 24px; right: 16px; }
 }
 
-/* ===== grid full layar ala Ferrari ===== */
 .grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); }
 .tile { position: relative; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; gap: 16px; min-height: clamp(340px, 52vh, 560px); padding: 32px; overflow: hidden; color: #fff; background-color: var(--bg, #111); background-image: linear-gradient(rgba(0,0,0,.25), rgba(0,0,0,.6)), var(--img, none); background-size: cover; background-position: center; }
 .tile small { margin: 0; font-size: 1rem; font-weight: 600; letter-spacing: 0; color: #fff; }
@@ -306,12 +300,10 @@ main p { color: #a7a59d; line-height: 1.7; max-width: 32em; }
 .tile:hover .circ { background: var(--green); border-color: var(--green); color: #07140d; }
 .tile:focus-visible { outline: 2px solid var(--green); outline-offset: -4px; }
 
-/* ===== fade in berulang ===== */
 .fx { opacity: 0; transform: translateY(22px); transition: opacity .35s ease, transform .35s ease; }
 .fx.in { opacity: 1; transform: none; transition: opacity .9s ease var(--d, 0s), transform .9s ease var(--d, 0s); }
 @media (prefers-reduced-motion: reduce) { .fx, .fx.in { opacity: 1; transform: none; transition: none; } }
 
-/* ===== section cars gaya Sapuangin ===== */
 .car { position: relative; background: #121212; padding: clamp(40px, 6vw, 88px) clamp(16px, 3vw, 40px); border-bottom: .5px solid var(--line); overflow: hidden; }
 .car-title { --c: 22px; display: block; width: fit-content; margin: 0 auto clamp(24px, 4vw, 56px); padding: 14px clamp(28px, 6vw, 80px); background: var(--ac); color: #fff; text-align: center; font-family: Montserrat, sans-serif; font-weight: 800; font-size: clamp(2rem, 5.5vw, 4.4rem); line-height: 1.05; letter-spacing: -.01em; }
 .car-grid { display: grid; grid-template-columns: 1.15fr 1fr; gap: clamp(20px, 4vw, 64px); align-items: center; }
@@ -343,14 +335,12 @@ main p { color: #a7a59d; line-height: 1.7; max-width: 32em; }
   .carinfo p { margin-left: 0; }
 }
 
-/* ===== marquee ===== */
 .marquee { overflow: hidden; border-bottom: .5px solid var(--line); padding: 22px 0; background: #080808; }
 .mq-track { display: flex; width: max-content; gap: 36px; animation: mq 38s linear infinite; font-family: Montserrat, sans-serif; font-weight: 800; font-size: clamp(2rem, 6vw, 4.5rem); line-height: 1; white-space: nowrap; color: transparent; -webkit-text-stroke: .6px #5a5a55; }
 .mq-track .dot { color: var(--green); -webkit-text-stroke: 0; }
 @keyframes mq { to { transform: translateX(-50%); } }
 @media (prefers-reduced-motion: reduce) { .mq-track { animation: none; } }
 
-/* ===== hall of fame ===== */
 .hof { --ac: #19a574; background: #070707; padding: clamp(48px, 7vw, 104px) clamp(16px, 3vw, 40px); border-bottom: .5px solid var(--line); text-align: center; }
 .hof-sub { margin: 0 auto clamp(28px, 5vw, 64px); max-width: 34em; }
 .badges { display: flex; flex-wrap: wrap; justify-content: center; gap: clamp(10px, 2vw, 28px); max-width: 1200px; margin: 0 auto; }
@@ -367,7 +357,6 @@ main p { color: #a7a59d; line-height: 1.7; max-width: 32em; }
 .badge-txt em { font-style: italic; font-size: 5cqw; color: var(--ash); }
 .hof-cta { margin-top: clamp(32px, 5vw, 64px); display: inline-flex; align-items: center; gap: 6px; }
 
-/* ===== halaman achievements ===== */
 .achpage { color: var(--ivory); }
 .ach-hero { --ac: #19a574; text-align: center; padding: clamp(110px, 14vw, 170px) clamp(16px, 3vw, 40px) 24px; }
 .ach-hero p { margin: 0 auto; max-width: 36em; }
@@ -385,7 +374,6 @@ main p { color: #a7a59d; line-height: 1.7; max-width: 32em; }
 .ach-body h3 { font-family: Montserrat, sans-serif; font-weight: 700; font-size: 1.15rem; line-height: 1.25; margin-bottom: 8px; }
 .ach-body p { font-size: .9rem; line-height: 1.6; }
 
-/* ===== rapikan teks lencana: ukuran seragam, muat di dalam laurel ===== */
 .badge-txt { inset: 16% 21%; display: grid; grid-template-rows: 15cqw 17cqw 5.5cqw; row-gap: 2cqw; align-content: center; justify-items: center; align-items: center; gap: 0; row-gap: 2cqw; }
 .badge-txt b { font-size: 15cqw; line-height: 1; }
 .badge-txt b.w { font-size: 10.5cqw; }
@@ -393,15 +381,14 @@ main p { color: #a7a59d; line-height: 1.7; max-width: 32em; }
 .badge-txt em { font-size: 4.2cqw; line-height: 1.2; white-space: nowrap; }
 @media (max-width: 560px) { .badge { width: min(78vw, 320px); } }
 
-/* ===== kutipan: foto hitam putih, teks putih tebal, memudar di atas dan bawah ===== */
 .voices { position: relative; color: #fff; overflow-x: clip; background: #070707; }
 .voice { position: relative; height: 200vh; }
-/* fade dipasang di pembungkus .voice (bukan .voice-pin yang sticky), jadi hanya terlihat saat masuk dan keluar section */
+
 .voice::before, .voice::after { content: ""; position: absolute; left: 0; right: 0; z-index: 2; pointer-events: none; }
 .voice::before { top: 0; height: 38vh; background: linear-gradient(#070707, rgba(7, 7, 7, 0)); }
 .voice::after { bottom: 0; height: 24vh; background: linear-gradient(rgba(7, 7, 7, 0), #070707); }
 .voice-pin { position: sticky; top: 0; height: 100svh; display: flex; flex-direction: column; justify-content: center; padding: 96px clamp(16px, 5vw, 80px) 56px; overflow: hidden; background: #070707; }
-/* foto latar di lapisan sendiri supaya hanya latar yang hitam putih (foto Eddy tetap berwarna) */
+
 .voice-pin::before { content: ""; position: absolute; inset: 0; z-index: 0; background: linear-gradient(rgba(0, 0, 0, .55), rgba(0, 0, 0, .65)), var(--bg, url("assets/voices/bg.jpg")) center / cover no-repeat; filter: grayscale(1); }
 .v-deco { display: none; }
 main .v-eyebrow { position: relative; z-index: 1; max-width: 1300px; width: 100%; margin: 0 auto 28px; color: #fff; }
@@ -425,13 +412,11 @@ main .voices p.v-id { margin-top: 26px; max-width: 46em; font-style: italic; fon
   .v-quote { font-size: 1.2rem; }
 }
 
-/* ===== PWA: tombol install ===== */
+
 .install-btn { margin-top: 18px; background: none; border: 1px solid rgba(236,231,218,.5); color: var(--ivory); padding: 10px 22px; font: inherit; font-size: .85rem; letter-spacing: .04em; cursor: pointer; transition: background .25s, color .25s; }
 .install-btn:hover { background: var(--ivory); color: #080808; }
 .install-btn[hidden] { display: none; }
 
-
-/* ===== hero baru: wordmark dulu, deskripsi muncul saat scroll ===== */
 .hero2 { --mark: 1; --color: 0; --story: 0; --bright1: .6; position: relative; height: 260vh; background: #000; }
 .hero2-pin { position: sticky; top: 0; height: 100svh; overflow: hidden; }
 .hero2-bg { position: absolute; inset: 0; background-size: cover; background-position: center; }
@@ -447,22 +432,19 @@ main .voices p.v-id { margin-top: 26px; max-width: 46em; font-style: italic; fon
 .hero2-story p { max-width: 54em; font-size: clamp(1rem, 1.5vw, 1.3rem); line-height: 1.65; color: #fff; text-shadow: 0 2px 20px rgba(0,0,0,.6); }
 @media (max-width: 760px) { .hero2 { height: 240vh; } }
 
-/* navbar: menu kiri, logo kanan */
+
 .top { grid-template-columns: 1fr auto; }
 .logo { justify-self: end; display: block; }
 .logo img { display: block; height: 38px; width: auto; }
 @media (max-width: 640px) { .logo img { height: 30px; } }
 
-/* marquee: background hijau, teks hitam */
 .marquee { background: var(--green); border-bottom-color: rgba(0, 0, 0, .25); }
 .mq-track { color: #080808; -webkit-text-stroke: 0; }
 .mq-track .dot { color: rgba(8, 8, 8, .35); }
 
-/* marquee kuning (di antara hero dan grid): teks hitam, jalan ke kiri */
 .marquee.y { background: #ffd60a; border-bottom-color: rgba(0, 0, 0, .25); }
 .marquee.y .mq-track { animation-duration: 34s; }
 
-/* stats: angka besar, tanpa kotak */
 .stats {
   display: flex;
   justify-content: center;
@@ -495,7 +477,6 @@ main .voices p.v-id { margin-top: 26px; max-width: 46em; font-style: italic; fon
   .stats > div { border-bottom: 0; }
 }
 
-/* stats: foto latar berwarna, memudar di atas dan bawah */
 .stats { position: relative; isolation: isolate; padding-block: clamp(96px, 14vw, 200px); }
 .stats::before {
   content: "";
@@ -511,7 +492,6 @@ main .voices p.v-id { margin-top: 26px; max-width: 46em; font-style: italic; fon
 }
 .stats b, .stats span { text-shadow: 0 2px 24px rgba(0, 0, 0, .55); }
 
-/* hall of fame: foto hitam putih di atas, memudar ke hitam */
 .hof { position: relative; isolation: isolate; }
 .hof::before {
   content: "";
@@ -527,7 +507,6 @@ main .voices p.v-id { margin-top: 26px; max-width: 46em; font-style: italic; fon
 }
 .hof-sub { color: #d6d3c8; text-shadow: 0 1px 14px rgba(0, 0, 0, .6); }
 
-/* achievements: foto hitam putih di hero, memudar ke hitam */
 .ach-hero { position: relative; isolation: isolate; }
 .ach-hero::before {
   content: "";
@@ -542,7 +521,7 @@ main .voices p.v-id { margin-top: 26px; max-width: 46em; font-style: italic; fon
 }
 .ach-hero p { color: #d6d3c8; text-shadow: 0 1px 14px rgba(0, 0, 0, .6); }
 
-/* fade putih (sponsors) -> hitam (footer), hanya di halaman yang punya section sponsors */
+
 main:has(> .sp-section) + .foot {
   position: relative;
   padding-top: clamp(120px, 15vw, 220px);

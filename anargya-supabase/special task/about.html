@@ -15,6 +15,7 @@
   <link rel="stylesheet" href="pages.css">
   <link rel="stylesheet" href="news.css">
    <link rel="stylesheet" href="footer-wordmark.css">
+      <link rel="stylesheet" href="loader.css">
    </head>
 <body>
 
@@ -152,5 +153,8 @@
 <script>
 document.getElementById("msgForm").addEventListener("submit",function(e){e.preventDefault();var f=new FormData(e.target);location.href="mailto:anargya.its@gmail.com?subject="+encodeURIComponent("Message from "+f.get("name"))+"&body="+encodeURIComponent(f.get("msg")+"\n\n"+f.get("name")+" ("+f.get("email")+")");});
 </script>
+
+ <script src="loader.js"></script>
+ 
 </body>
 </html>

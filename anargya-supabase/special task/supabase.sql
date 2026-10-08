@@ -1,150 +1,119 @@
-const Store = (() => {
-  const K = { p: 'anargya_products', c: 'anargya_cart', o: 'anargya_orders', s: 'anargya_seed_v5' };
-  const read = (k, d) => { try { const v = JSON.parse(localStorage.getItem(k)); return v == null ? d : v; } catch (e) { return d; } };
-  const write = (k, v) => { try { localStorage.setItem(k, JSON.stringify(v)); return true; } catch (e) { return false; } };
+-- Anargya ITS EV Team - Supabase schema
+-- Paste this entire file into Supabase SQL Editor > New snippet, then Run.
 
-  // Data awal (fallback offline). Sumber utama = tabel `products` di Supabase.
-  const seed = [
-    { id: 'p22', name: '8th GEN Keychain', price: 15000, category: 'Collectibles', stock: 100, sizes: [], desc: 'Keychain celebrating the 8th generation of the Anargya team.', image: 'assets/shop/keychain-8th-gen.jpg' },
-    { id: 'p21', name: 'Anargya T-Shirt Black "History"', price: 130000, category: 'Apparel', stock: 50, sizes: ['S', 'M', 'L', 'XL', 'XXL'], desc: 'Black Anargya tee from the "History" collection. Soft cotton, made to carry the story of the team.', image: 'assets/shop/tee-history-black.jpg' },
-    { id: 'p20', name: 'Anargya T-Shirt White "History"', price: 130000, category: 'Apparel', stock: 50, sizes: ['S', 'M', 'L', 'XL', 'XXL'], desc: 'White Anargya tee from the "History" collection. Soft cotton, made to carry the story of the team.', image: 'assets/shop/tee-history-white.jpg' },
-    { id: 'p19', name: 'Anargya Strap', price: 20000, category: 'Accessories', stock: 100, sizes: [], desc: 'Anargya strap in team colors. A simple way to carry your keys, ID or badge.', image: 'assets/shop/anargya-strap.jpg' },
-    { id: 'p18', name: 'Keychain F1 Chill Guys', price: 15000, category: 'Collectibles', stock: 100, sizes: [], desc: 'F1 Chill Guys keychain. Relaxed on the outside, racing on the inside.', image: 'assets/shop/keychain-f1-chillguys.jpg' },
-    { id: 'p17', name: 'Gold Thunder Jersey', price: 125000, category: 'Apparel', stock: 40, sizes: ['S', 'M', 'L', 'XL', 'XXL'], desc: 'The Anargya team jersey in the Gold Thunder edition. Lightweight, breathable and made to be worn on and off the track.', image: 'assets/shop/jersey-gold-thunder.jpg' },
-    { id: 'p16', name: 'ANR 2025 Workshirt', price: 160000, category: 'Apparel', stock: 30, sizes: ['S', 'M', 'L', 'XL', 'XXL'], desc: 'The ANR 2025 workshirt, the crew shirt for garage days and race weekends. Built tough, with the Anargya mark.', image: 'assets/shop/workshirt-2025.jpg' },
-    { id: 'p15', name: 'Mark 4.0 T-Shirt Black', price: 115000, category: 'Apparel', stock: 50, sizes: ['S', 'M', 'L', 'XL', 'XXL'], desc: 'Black cotton tee celebrating the Mark 4.0 car. Dark, bold, built for night runs.', image: 'assets/shop/tee-mark4-black.jpg' },
-    { id: 'p14', name: 'Keychain ANR Mark 1-4', price: 15000, category: 'Collectibles', stock: 100, sizes: [], desc: 'Keychain from the ANR Mark 1 to Mark 4 series. Collect the cars that started it all.', image: 'assets/shop/keychain-mark1-4.jpg' },
-    { id: 'p7', name: 'ANR Tee Black', price: 149000, category: 'Apparel', stock: 60, sizes: ['S', 'M', 'L', 'XL', 'XXL'], desc: 'Dark, bold, built for night runs. Heavy cotton tee in black with the rising-sun car print on the chest and katakana "Champion" lettering.', image: 'assets/shop/tee-black.jpg' },
-    { id: 'p8', name: 'ANR Tee White', price: 149000, category: 'Apparel', stock: 60, sizes: ['S', 'M', 'L', 'XL', 'XXL'], desc: 'Clean lines, sharp looks, built to stand out. Soft white cotton tee with the Anargya car and red sun on the chest.', image: 'assets/shop/tee-white.jpg' },
-    { id: 'p9', name: 'Mark 4.0 Back-Print Tee', price: 179000, category: 'Apparel', stock: 35, sizes: ['S', 'M', 'L', 'XL', 'XXL'], desc: 'White tee with a full-size Mark 4.0 race photo print on the back and a small Mark 4.0 tag on the chest. Which crew you ride with?', image: 'assets/shop/tee-mark4.jpg' },
-    { id: 'p10', name: 'Pit Lanyard', price: 45000, category: 'Accessories', stock: 80, sizes: [], desc: 'Woven black lanyard with Anargya ITS Formula EV Team lettering, green racing stripes and a metal clip. Garage essentials, pocket-sized.', image: 'assets/shop/lanyard.jpg' },
-    { id: 'p11', name: 'Driver Acrylic Keychain', price: 35000, category: 'Collectibles', stock: 90, sizes: [], desc: 'Double-sided acrylic keychain of the Anargya driver in a green-visor helmet. Pairs with the Pit Lanyard.', image: 'assets/shop/keychain.jpg' },
-    { id: 'p4', name: 'Sticker Pack', price: 10000, category: 'Accessories', stock: 100, sizes: [], desc: 'Set of weatherproof stickers for laptops and helmets.', image: 'assets/shop/sticker-pack.jpg' }
-  ];
-  if (localStorage.getItem(K.p) === null) {
-    write(K.p, seed);
-    write(K.s, true);
-  } else if (localStorage.getItem(K.s) === null) {
-    const cur = read(K.p, []);
-    const ids = new Set(cur.map(p => p.id));
-    const REFRESH = ['p4'];
-    const REMOVE = ['p1', 'p2', 'p3', 'p5', 'p6', 'p12', 'p13'];
-    const merged = cur.filter(p => !REMOVE.includes(p.id)).map(p => {
-      const s = REFRESH.includes(p.id) && seed.find(x => x.id === p.id);
-      return s ? { ...p, name: s.name, price: s.price, category: s.category, sizes: s.sizes, desc: s.desc, image: s.image } : p;
-    });
-    write(K.p, seed.filter(p => !ids.has(p.id)).concat(merged));
-    write(K.s, true);
-  }
+create extension if not exists pgcrypto;
 
-  const esc = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
-  const fmt = n => 'Rp ' + Math.round(Number(n) || 0).toLocaleString('id-ID');
+drop function if exists public.place_order(jsonb, jsonb, text);
 
-  /* ---------- Supabase ---------- */
-  const parseSizes = v => {
-    if (Array.isArray(v)) return v;
-    if (typeof v === 'string' && v.trim()) {
-      try { const j = JSON.parse(v); if (Array.isArray(j)) return j; } catch (e) { /* bukan JSON */ }
-      return v.split(',').map(s => s.trim()).filter(Boolean);
-    }
-    return [];
-  };
-  const fromRow = r => ({
-    id: String(r.id),
-    name: r.name || '',
-    price: Number(r.price) || 0,
-    category: r.category || '',
-    stock: Number(r.stock) || 0,
-    sizes: parseSizes(r.sizes),
-    desc: r.description || r.desc || '',
-    image: r.image || ''
-  });
+drop table if exists public.orders cascade;
+drop table if exists public.products cascade;
 
-  // Mencari client Supabase dari supabase-config.js (mendukung beberapa gaya penamaan).
-  function client() {
-    if (window.sb && window.sb.from) return window.sb;
-    if (window.supabaseClient && window.supabaseClient.from) return window.supabaseClient;
-    if (window.supabase && window.supabase.from) return window.supabase;
-    const url = window.SUPABASE_URL, key = window.SUPABASE_ANON_KEY;
-    if (url && key && window.supabase && window.supabase.createClient) {
-      window.supabaseClient = window.supabase.createClient(url, key);
-      return window.supabaseClient;
-    }
-    throw new Error('Supabase is not configured. Check supabase-config.js.');
-  }
+create table public.products (
+  id text primary key,
+  name text not null,
+  price integer not null check (price >= 0),
+  category text not null default 'Other',
+  stock integer not null default 0 check (stock >= 0),
+  sizes jsonb not null default '[]'::jsonb,
+  "desc" text not null default '',
+  image text not null default '',
+  created_at timestamptz not null default now()
+);
 
-  let ready = null;
+create table public.orders (
+  id text primary key,
+  customer jsonb not null,
+  items jsonb not null,
+  total integer not null check (total >= 0),
+  payment text not null,
+  status text not null default 'Pending' check (status in ('Pending','Paid','Shipped','Completed','Cancelled')),
+  restocked boolean not null default false,
+  created_at timestamptz not null default now()
+);
 
-  const api = {
-    esc, fmt,
-    products: () => read(K.p, []),
-    setProducts: l => write(K.p, l),
-    product: id => api.products().find(p => p.id === id),
-    cart: () => read(K.c, []),
-    saveCart(c) { write(K.c, c); api.badge(); },
-    cartLines() {
-      const ps = api.products();
-      const clean = api.cart().filter(i => ps.some(p => p.id === i.id));
-      write(K.c, clean);
-      return clean.map(i => { const p = ps.find(x => x.id === i.id); return { ...i, p, line: p.price * i.qty }; });
-    },
-    cartCount: () => api.cart().reduce((n, i) => n + i.qty, 0),
-    cartTotal: () => api.cartLines().reduce((n, l) => n + l.line, 0),
-    addToCart(id, size, qty) {
-      const p = api.product(id); if (!p) return false;
-      const c = api.cart(); const it = c.find(i => i.id === id && i.size === size);
-      if ((it ? it.qty : 0) + qty > p.stock) return false;
-      if (it) it.qty += qty; else c.push({ id, size, qty });
-      api.saveCart(c); return true;
-    },
-    setQty(i, qty) {
-      const c = api.cart(); const it = c[i]; if (!it) return;
-      const p = api.product(it.id);
-      if (qty <= 0) c.splice(i, 1); else it.qty = Math.min(qty, p ? p.stock : qty);
-      api.saveCart(c);
-    },
-    clearCart() { api.saveCart([]); },
+alter table public.products enable row level security;
+alter table public.orders enable row level security;
 
-    // riwayat order di perangkat ini saja (untuk halaman "Thank you")
-    orders: () => read(K.o, []),
-    setOrders: l => write(K.o, l),
+create policy "Public can view products" on public.products for select to anon, authenticated using (true);
+create policy "Admins can insert products" on public.products for insert to authenticated with check (true);
+create policy "Admins can update products" on public.products for update to authenticated using (true) with check (true);
+create policy "Admins can delete products" on public.products for delete to authenticated using (true);
 
-    init() {
-      if (!ready) ready = api.refreshProducts().then(() => true).catch(e => { ready = null; throw e; });
-      return ready;
-    },
+create policy "Admins can view orders" on public.orders for select to authenticated using (true);
+create policy "Admins can update orders" on public.orders for update to authenticated using (true) with check (true);
+create policy "Admins can delete orders" on public.orders for delete to authenticated using (true);
 
-    async refreshProducts() {
-      const { data, error } = await client().from('products').select('*').order('sort_order', { ascending: false });
-      if (error) throw new Error(error.message);
-      if (!data || !data.length) throw new Error('The products table is empty.');
-      write(K.p, data.map(fromRow));
-      api.badge();
-      return api.products();
-    },
+-- Public checkout RPC. It validates stock and calculates the total on the server.
+create or replace function public.place_order(p_customer jsonb, p_items jsonb, p_payment text)
+returns jsonb
+language plpgsql
+security definer
+set search_path = public
+as $$
+declare
+  it jsonb;
+  prod public.products%rowtype;
+  qty integer;
+  requested_size text;
+  final_items jsonb := '[]'::jsonb;
+  final_total integer := 0;
+  order_id text;
+  inserted_order public.orders%rowtype;
+begin
+  if jsonb_typeof(p_items) <> 'array' or jsonb_array_length(p_items) = 0 then
+    raise exception 'Cart is empty';
+  end if;
 
-    // draft: { customer:{name,phone,email,address,city,postal,note}, items:[{id,size,qty}], payment }
-    async placeOrder(draft) {
-      const { data, error } = await client().rpc('place_order', {
-        p_customer: draft.customer,
-        p_items: draft.items,
-        p_payment: draft.payment
-      });
-      if (error) throw new Error(error.message);
-      const order = { ...data, customer: draft.customer, created: Date.now() };
-      write(K.o, [order, ...api.orders()].slice(0, 20));
-      try { await api.refreshProducts(); } catch (e) { /* stok akan diperbarui di kunjungan berikutnya */ }
-      return order;
-    },
+  for it in select * from jsonb_array_elements(p_items) loop
+    qty := greatest(1, (it->>'qty')::integer);
+    requested_size := coalesce(it->>'size','');
 
-    badge() { document.querySelectorAll('#cartCount').forEach(el => { el.textContent = api.cartCount(); }); },
-    toast(msg) {
-      let t = document.getElementById('toast');
-      if (!t) { t = document.createElement('div'); t.id = 'toast'; t.setAttribute('role', 'status'); document.body.appendChild(t); }
-      t.textContent = msg; t.classList.add('show');
-      clearTimeout(t._h); t._h = setTimeout(() => t.classList.remove('show'), 2400);
-    }
-  };
-  api.badge();
-  return api;
-})();
+    select * into prod from public.products where id = it->>'id' for update;
+    if not found then raise exception 'Product not found: %', it->>'id'; end if;
+    if prod.stock < qty then raise exception 'Not enough stock for %', prod.name; end if;
+    if jsonb_array_length(prod.sizes) > 0 and not (prod.sizes ? requested_size) then
+      raise exception 'Invalid size for %', prod.name;
+    end if;
+
+    final_total := final_total + prod.price * qty;
+    final_items := final_items || jsonb_build_array(jsonb_build_object(
+      'id', prod.id, 'name', prod.name, 'size', requested_size, 'qty', qty, 'price', prod.price
+    ));
+
+    update public.products set stock = stock - qty where id = prod.id;
+  end loop;
+
+  order_id := 'AG-' || upper(substr(md5(gen_random_uuid()::text), 1, 6));
+  insert into public.orders(id, customer, items, total, payment)
+  values(order_id, p_customer, final_items, final_total, coalesce(nullif(p_payment,''),'Bank transfer'))
+  returning * into inserted_order;
+
+  return jsonb_build_object(
+    'id', inserted_order.id, 'date', inserted_order.created_at, 'customer', inserted_order.customer,
+    'items', inserted_order.items, 'total', inserted_order.total, 'payment', inserted_order.payment,
+    'status', inserted_order.status, 'restocked', inserted_order.restocked
+  );
+end;
+$$;
+
+revoke all on function public.place_order(jsonb, jsonb, text) from public;
+grant execute on function public.place_order(jsonb, jsonb, text) to anon, authenticated;
+
+insert into public.products (id,name,price,category,stock,sizes,"desc",image) values
+('p22', '8th GEN Keychain', 15000, 'Collectibles', 100, '[]'::jsonb, 'Keychain celebrating the 8th generation of the Anargya team.', 'assets/shop/keychain-8th-gen.jpg'),
+('p21', 'Anargya T-Shirt Black "History"', 130000, 'Apparel', 50, '["S","M","L","XL","XXL"]'::jsonb, 'Black Anargya tee from the "History" collection. Soft cotton, made to carry the story of the team.', 'assets/shop/tee-history-black.jpg'),
+('p20', 'Anargya T-Shirt White "History"', 130000, 'Apparel', 50, '["S","M","L","XL","XXL"]'::jsonb, 'White Anargya tee from the "History" collection. Soft cotton, made to carry the story of the team.', 'assets/shop/tee-history-white.jpg'),
+('p19', 'Anargya Strap', 20000, 'Accessories', 100, '[]'::jsonb, 'Anargya strap in team colors. A simple way to carry your keys, ID or badge.', 'assets/shop/anargya-strap.jpg'),
+('p18', 'Keychain F1 Chill Guys', 15000, 'Collectibles', 100, '[]'::jsonb, 'F1 Chill Guys keychain. Relaxed on the outside, racing on the inside.', 'assets/shop/keychain-f1-chillguys.jpg'),
+('p17', 'Gold Thunder Jersey', 125000, 'Apparel', 40, '["S","M","L","XL","XXL"]'::jsonb, 'The Anargya team jersey in the Gold Thunder edition. Lightweight, breathable and made to be worn on and off the track.', 'assets/shop/jersey-gold-thunder.jpg'),
+('p16', 'ANR 2025 Workshirt', 160000, 'Apparel', 30, '["S","M","L","XL","XXL"]'::jsonb, 'The ANR 2025 workshirt, the crew shirt for garage days and race weekends. Built tough, with the Anargya mark.', 'assets/shop/workshirt-2025.jpg'),
+('p15', 'Mark 4.0 T-Shirt Black', 115000, 'Apparel', 50, '["S","M","L","XL","XXL"]'::jsonb, 'Black cotton tee celebrating the Mark 4.0 car. Dark, bold, built for night runs.', 'assets/shop/tee-mark4-black.jpg'),
+('p14', 'Keychain ANR Mark 1-4', 15000, 'Collectibles', 100, '[]'::jsonb, 'Keychain from the ANR Mark 1 to Mark 4 series. Collect the cars that started it all.', 'assets/shop/keychain-mark1-4.jpg'),
+('p7', 'ANR Tee Black', 149000, 'Apparel', 60, '["S","M","L","XL","XXL"]'::jsonb, 'Dark, bold, built for night runs. Heavy cotton tee in black with the rising-sun car print on the chest and katakana "Champion" lettering.', 'assets/shop/tee-black.jpg'),
+('p8', 'ANR Tee White', 149000, 'Apparel', 60, '["S","M","L","XL","XXL"]'::jsonb, 'Clean lines, sharp looks, built to stand out. Soft white cotton tee with the Anargya car and red sun on the chest.', 'assets/shop/tee-white.jpg'),
+('p9', 'Mark 4.0 Back-Print Tee', 179000, 'Apparel', 35, '["S","M","L","XL","XXL"]'::jsonb, 'White tee with a full-size Mark 4.0 race photo print on the back and a small Mark 4.0 tag on the chest. Which crew you ride with?', 'assets/shop/tee-mark4.jpg'),
+('p10', 'Pit Lanyard', 45000, 'Accessories', 80, '[]'::jsonb, 'Woven black lanyard with Anargya ITS Formula EV Team lettering, green racing stripes and a metal clip. Garage essentials, pocket-sized.', 'assets/shop/lanyard.jpg'),
+('p11', 'Driver Acrylic Keychain', 35000, 'Collectibles', 90, '[]'::jsonb, 'Double-sided acrylic keychain of the Anargya driver in a green-visor helmet. Pairs with the Pit Lanyard.', 'assets/shop/keychain.jpg'),
+('p4', 'Sticker Pack', 10000, 'Accessories', 100, '[]'::jsonb, 'Set of weatherproof stickers for laptops and helmets.', 'assets/shop/sticker-pack.jpg')
+on conflict (id) do update set
+  name=excluded.name, price=excluded.price, category=excluded.category, sizes=excluded.sizes, "desc"=excluded."desc", image=excluded.image;

@@ -3,7 +3,6 @@ const Store = (() => {
   const read = (k, d) => { try { const v = JSON.parse(localStorage.getItem(k)); return v == null ? d : v; } catch (e) { return d; } };
   const write = (k, v) => { try { localStorage.setItem(k, JSON.stringify(v)); return true; } catch (e) { return false; } };
 
-  // Data awal (fallback offline). Sumber utama = tabel `products` di Supabase.
   const seed = [
     { id: 'p22', name: '8th GEN Keychain', price: 15000, category: 'Collectibles', stock: 100, sizes: [], desc: 'Keychain celebrating the 8th generation of the Anargya team.', image: 'assets/shop/keychain-8th-gen.jpg' },
     { id: 'p21', name: 'Anargya T-Shirt Black "History"', price: 130000, category: 'Apparel', stock: 50, sizes: ['S', 'M', 'L', 'XL', 'XXL'], desc: 'Black Anargya tee from the "History" collection. Soft cotton, made to carry the story of the team.', image: 'assets/shop/tee-history-black.jpg' },
@@ -40,7 +39,6 @@ const Store = (() => {
   const esc = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
   const fmt = n => 'Rp ' + Math.round(Number(n) || 0).toLocaleString('id-ID');
 
-  /* ---------- Supabase ---------- */
   const parseSizes = v => {
     if (Array.isArray(v)) return v;
     if (typeof v === 'string' && v.trim()) {
@@ -74,7 +72,6 @@ const Store = (() => {
     return row;
   };
 
-  // Mencari client Supabase dari supabase-config.js (mendukung beberapa gaya penamaan).
   function client() {
     if (window.sb && window.sb.from) return window.sb;
     if (window.supabaseClient && window.supabaseClient.from) return window.supabaseClient;
@@ -118,10 +115,8 @@ const Store = (() => {
     },
     clearCart() { api.saveCart([]); },
 
-    // riwayat order di perangkat ini saja (untuk halaman "Thank you")
     localOrders: () => read(K.o, []),
 
-    // ----- ADMIN (butuh login admin + policy RLS dari supabase-admin.sql) -----
     async orders() {
       const { data, error } = await client().from('orders').select('*, order_items(*)').order('created_at', { ascending: false });
       if (error) throw new Error(error.message);
@@ -142,7 +137,7 @@ const Store = (() => {
       if (error) throw new Error(error.message);
       if (!data || !data.length) throw new Error('Not allowed. Are you signed in as an admin?');
     },
-    // menerima seluruh daftar produk; hanya baris yang berubah/baru yang di-upsert, yang hilang dihapus
+
     async setProducts(list) {
       const sb = client();
       const cur = api.products();
@@ -182,7 +177,6 @@ const Store = (() => {
       return api.products();
     },
 
-    // draft: { customer:{name,phone,email,address,city,postal,note}, items:[{id,size,qty}], payment }
     async placeOrder(draft) {
       const { data, error } = await client().rpc('place_order', {
         p_customer: draft.customer,

@@ -10,7 +10,6 @@
     node.style.backgroundImage = src ? 'url("' + String(src).replace(/"/g, '%22') + '")' : '';
   };
 
-  // Store.toast() membuat #toast, tetapi CSS-nya belum ada di stylesheet; tambahkan di sini
   if (!document.getElementById('toast-style')) {
     const st = document.createElement('style');
     st.id = 'toast-style';
@@ -27,7 +26,6 @@
   const state = { cat: 'All', q: '', sort: 'new' };
   const dState = { p: null, size: '', qty: 1 };
 
-  /* ---------- daftar produk ---------- */
   function visibleProducts() {
     const all = Store.products().map((p, i) => ({ p, i }));
     const term = state.q.trim().toLowerCase();
@@ -63,7 +61,6 @@
       grid.replaceChildren(el('p', 'empty', 'No products match your search.'));
       return;
     }
-    // 3 produk teratas di katalog (paling baru) diberi label "New"
     const newIds = new Set(Store.products().slice(0, 3).map(p => p.id));
 
     grid.replaceChildren(...list.map((p, i) => {
@@ -83,7 +80,6 @@
       else if (newIds.has(p.id)) img.appendChild(el('span', 'p-tag p-new', 'New'));
       else if (p.stock <= 5) img.appendChild(el('span', 'p-tag p-low', 'Low stock'));
 
-      // panel yang muncul saat hover
       const hv = el('div', 'p-hover');
       const sizes = el('div', 'p-sizes');
       const sz = Array.isArray(p.sizes) ? p.sizes : [];
@@ -101,7 +97,6 @@
 
       card.append(img, info);
 
-      // cahaya hijau mengikuti kursor
       card.addEventListener('pointermove', e => {
         const r = img.getBoundingClientRect();
         img.style.setProperty('--mx', (e.clientX - r.left) + 'px');
@@ -118,7 +113,6 @@
   q.addEventListener('input', () => { state.q = q.value; renderGrid(); });
   sort.addEventListener('change', () => { state.sort = sort.value; renderGrid(); });
 
-  /* ---------- dialog produk ---------- */
   function renderDialog() {
     const p = dState.p;
     const max = Math.max(p.stock, 0);
@@ -172,7 +166,6 @@
     openDrawer();
   });
 
-  /* ---------- keranjang ---------- */
   function openDrawer() { renderCart(); drawer.classList.add('open'); scrim.classList.add('open'); }
   function closeDrawer() { drawer.classList.remove('open'); scrim.classList.remove('open'); }
 
@@ -222,7 +215,6 @@
   document.addEventListener('keydown', e => { if (e.key === 'Escape') closeDrawer(); });
   $('goCheckout').addEventListener('click', e => { if (!Store.cartCount()) e.preventDefault(); });
 
-  /* ---------- mulai ---------- */
   renderCats();
   renderGrid();
   renderCart();
