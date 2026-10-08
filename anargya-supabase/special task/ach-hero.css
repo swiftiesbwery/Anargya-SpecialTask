@@ -1,0 +1,32 @@
+/* ===== hero achievements gaya Sapuangin, versi Anargya ===== */
+.ach-top { position: relative; isolation: isolate; min-height: 100svh; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: clamp(28px, 6vh, 64px); padding: 110px clamp(16px, 4vw, 60px) 90px; color: #fff; overflow: hidden; background: #080808; }
+
+/* foto hitam putih + fade ke warna background halaman */
+.ach-top-bg { position: absolute; inset: 0; z-index: -1; background: var(--img) center 30% / cover no-repeat #111; filter: grayscale(1) brightness(.5) contrast(1.1);
+  -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 55%, transparent 100%);
+          mask-image: linear-gradient(to bottom, #000 0%, #000 55%, transparent 100%); }
+.ach-top::after { content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none; background: radial-gradient(ellipse at center, rgba(0,0,0,0) 35%, rgba(0,0,0,.55) 100%); }
+
+.ach-laurel { display: block; flex: none; height: clamp(150px, 26vw, 340px); aspect-ratio: 92 / 175; width: auto; overflow: visible; background: none !important; border: 0; color: #fff; filter: drop-shadow(0 2px 18px rgba(0,0,0,.5)); }
+.ach-laurel--r { transform: scaleX(-1); }
+.ach-top-inner { display: flex; align-items: center; justify-content: center; gap: clamp(8px, 2.5vw, 40px); width: 100%; max-width: 1400px; }
+
+.ach-top-text { display: flex; flex-direction: column; align-items: center; text-align: center; gap: clamp(10px, 2vw, 22px); text-shadow: 0 2px 30px rgba(0,0,0,.45); }
+.ach-eyebrow, .ach-sub { font-family: Montserrat, Inter, sans-serif; font-weight: 500; text-transform: uppercase; letter-spacing: .6em; font-size: clamp(.7rem, 1.7vw, 1.5rem); margin-right: -.6em; }
+.ach-sub { letter-spacing: .5em; font-size: clamp(.65rem, 1.5vw, 1.3rem); }
+.ach-big { font-family: Montserrat, Inter, sans-serif; font-weight: 800; text-transform: uppercase; font-size: clamp(2.2rem, 9.5vw, 9rem); line-height: .95; letter-spacing: -.02em; }
+
+.ach-cta { display: inline-block; padding: 13px 28px; border: 1px solid rgba(255,255,255,.7); border-radius: 6px; background: rgba(0,0,0,.35); backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px); font-family: Montserrat, Inter, sans-serif; font-weight: 700; text-transform: uppercase; letter-spacing: .02em; font-size: .95rem; color: #fff; transition: background .25s, color .25s, border-color .25s; }
+.ach-cta:hover { background: var(--green); border-color: var(--green); color: #07140d; }
+
+@media (max-width: 640px) {
+  .ach-laurel { height: clamp(110px, 34vw, 190px); }
+  .ach-eyebrow, .ach-sub { letter-spacing: .35em; margin-right: -.35em; }
+}
+
+/* blok .ach-hero lama: sekarang cuma jadi baris filter di bawah hero baru */
+.ach-hero { padding-top: 24px; padding-bottom: 8px; }
+.ach-hero::before { display: none; }
+
+/* versi di homepage (di bawah grid): tidak perlu setinggi layar penuh */
+.ach-top--home { min-height: 80svh; padding-top: 80px; padding-bottom: 80px; }

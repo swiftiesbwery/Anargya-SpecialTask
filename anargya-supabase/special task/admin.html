@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Admin | Anargya ITS EV Team</title>
+  <meta name="theme-color" content="#000000">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="apple-touch-icon" href="assets/icons/icon-192.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Montserrat:wght@300;500;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="logo.css">
+  <link rel="stylesheet" href="pages.css">
+   <link rel="stylesheet" href="footer-wordmark.css">
+   </head>
+<body>
+
+<header class="top" id="top">
+  <button class="menu-btn" id="menuBtn" aria-label="Open menu" aria-expanded="false">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M4 8h16M4 16h16"/></svg>
+    <span>Menu</span>
+  </button>
+  <a class="logo" href="index.html#home" aria-label="Anargya home">
+    <img src="assets/logo-anargya.png" alt="Anargya ITS Formula EV Team">
+  </a>
+</header>
+
+<main class="pg">
+  <section class="ach-hero"><h1 class="car-title cham">Admin Panel</h1><p>Manage shop products and orders.</p></section>
+
+  <section class="login" id="login">
+    <form class="form" id="loginForm">
+      <h3>Sign in</h3>
+      <label class="field">Email<input name="u" type="email" autocomplete="username" required></label>
+      <label class="field">Password<input name="p" type="password" autocomplete="current-password" required></label>
+      <span class="err" id="loginErr"></span>
+      <button class="btn cham" type="submit">Sign in</button>
+      <p class="note">Sign in with the admin email/password you create in Supabase Authentication.</p>
+    </form>
+  </section>
+
+  <section class="admin" id="app" hidden>
+    <div class="admin-bar"><div class="tabs"><button data-tab="dash" class="on">Dashboard</button><button data-tab="products">Products</button><button data-tab="orders">Orders</button></div><button class="ghost" id="logout">Sign out</button></div>
+
+    <div class="tabpane" id="tab-dash">
+      <div class="stats-cards" id="stats"></div>
+      <div class="two"><div><h3>Low stock</h3><ul class="plain" id="lowStock"></ul></div><div><h3>Recent orders</h3><ul class="plain" id="recent"></ul></div></div>
+    </div>
+
+    <div class="tabpane" id="tab-products" hidden>
+      <div class="pane-head"><h3>Products</h3><button class="btn cham" id="addProduct" type="button">Add product</button></div>
+      <div class="tbl-wrap"><table class="tbl"><thead><tr><th></th><th>Name</th><th>Category</th><th>Price</th><th>Stock</th><th></th></tr></thead><tbody id="pBody"></tbody></table></div>
+    </div>
+
+    <div class="tabpane" id="tab-orders" hidden>
+      <div class="pane-head"><h3>Orders</h3></div>
+      <div class="tbl-wrap"><table class="tbl"><thead><tr><th>Order</th><th>Date</th><th>Customer</th><th>Total</th><th>Payment</th><th>Status</th><th></th></tr></thead><tbody id="oBody"></tbody></table></div>
+    </div>
+  </section>
+</main>
+
+<dialog id="pDlg">
+  <form class="form" id="pForm">
+    <h3 id="pTitle">Add product</h3>
+    <input type="hidden" name="pid">
+    <label class="field">Name<input name="name" required></label>
+    <div class="row2"><label class="field">Category<input name="category" placeholder="Apparel"></label><label class="field">Price (Rp)<input name="price" type="number" min="0" required></label></div>
+    <div class="row2"><label class="field">Stock<input name="stock" type="number" min="0" required></label><label class="field">Sizes (comma separated)<input name="sizes" placeholder="S, M, L, XL"></label></div>
+    <label class="field">Description<textarea name="desc" rows="3"></textarea></label>
+    <label class="field">Photo<input name="image" type="file" accept="image/*"></label>
+    <div class="img-prev" id="pPrev"></div>
+    <div class="dlg-actions"><button class="ghost" type="button" id="pCancel">Cancel</button><button class="btn cham" type="submit">Save</button></div>
+  </form>
+</dialog>
+<dialog id="oDlg"><button class="x" id="oClose" aria-label="Close">&#10005;</button><div class="o-detail" id="oDetail"></div></dialog>
+
+<footer class="foot" id="contact">
+     <div class="giant" aria-label="Anargya" role="img"><span class="gl a1"></span><span class="gl mid"></span><span class="gl a2"></span></div>
+  <nav><a href="index.html">Home</a><a href="about.html">About</a><a href="index.html#cars">Cars</a><a href="achievements.html">Achievements</a><a href="news.html">News</a><a href="shop.html">Shop</a><a href="index.html#sponsors">Sponsors</a><a href="admin.html">Admin</a></nav>
+  <p>anargya.its@gmail.com &nbsp;|&nbsp; Instagram @anargya.its</p>
+  <button class="install-btn" type="button" hidden>Install app</button>
+</footer>
+
+<div class="menu" id="menu" aria-hidden="true">
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="about.html">About</a>
+    <a href="index.html#cars">Cars</a>
+    <a href="achievements.html">Achievements</a>
+    <a href="news.html">News</a>
+    <a href="shop.html">Shop</a>
+    <a href="index.html#sponsors">Sponsors</a>
+    <a href="index.html#contact">Contact</a>
+  </nav>
+</div>
+
+<script src="script.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="supabase-config.js"></script>
+<script src="store.js"></script>
+<script src="admin.js"></script>
+</body>
+</html>

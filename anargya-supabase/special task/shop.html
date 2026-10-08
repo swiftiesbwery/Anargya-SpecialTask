@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Shop | Anargya ITS EV Team</title>
+  <meta name="theme-color" content="#000000">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="apple-touch-icon" href="assets/icons/icon-192.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Montserrat:wght@300;500;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="logo.css">
+  <link rel="stylesheet" href="pages.css">
+  <link rel="stylesheet" href="footer-wordmark.css">
+</head>
+<body>
+<header class="top" data-solid id="top">
+  <button class="menu-btn" id="menuBtn" aria-label="Open menu" aria-expanded="false">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M4 8h16M4 16h16"/></svg>
+    <span>Menu</span>
+  </button>
+  <a class="logo" href="index.html" aria-label="Anargya home">
+    <svg width="56" height="26" viewBox="0 0 60 26" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round"><path d="M2 22C14 22 18 4 30 4S46 22 58 22"/><path d="M2 4C14 4 18 22 30 22S46 4 58 4"/></svg>
+  </a>
+  <a class="lnk" id="cartBtn" href="shop.html?cart=1">Cart (<span id="cartCount">0</span>)</a>
+</header>
+
+<main class="pg">
+  <section class="shop-hero">
+    <span class="shop-eyebrow">Anargya ITS EV Team</span>
+    <h1 class="shop-title">Official <em>Shop</em></h1>
+    <p>Gear from the team. Every purchase supports the next Anargya car.</p>
+  </section>
+
+  <div class="ticker" aria-hidden="true">
+    <div class="ticker-track">
+      <span>Official merch</span><span>Every purchase supports the next car</span><span>Anargya ITS EV Team</span><span>Official merch</span><span>Every purchase supports the next car</span><span>Anargya ITS EV Team</span>
+      <span>Official merch</span><span>Every purchase supports the next car</span><span>Anargya ITS EV Team</span><span>Official merch</span><span>Every purchase supports the next car</span><span>Anargya ITS EV Team</span>
+    </div>
+  </div>
+
+  <div class="toolbar">
+    <div class="filters" id="cats"></div>
+    <div class="tools">
+      <span class="count" id="count" aria-live="polite"></span>
+      <input id="q" type="search" placeholder="Search products" aria-label="Search products">
+      <select id="sort" aria-label="Sort products"><option value="new">Newest</option><option value="low">Price: low to high</option><option value="high">Price: high to low</option><option value="name">Name</option></select>
+    </div>
+  </div>
+
+  <section class="pgrid" id="grid" aria-live="polite"></section>
+</main>
+
+<dialog id="dlg">
+  <button class="x" id="dClose" type="button" aria-label="Close">&#10005;</button>
+  <div class="dlg-grid">
+    <div class="d-img cham" id="dImg"></div>
+    <div class="d-info">
+      <span class="d-cat" id="dCat"></span>
+      <h2 id="dName"></h2>
+      <b class="d-price" id="dPrice"></b>
+      <p id="dDesc"></p>
+      <div id="dSizesWrap">
+        <label class="lbl">Size</label>
+        <div class="chips" id="dSizes"></div>
+      </div>
+      <div class="qty-row">
+        <label class="lbl">Quantity</label>
+        <div class="qty">
+          <button type="button" id="dMinus" aria-label="Decrease">&minus;</button>
+          <span id="dQty">1</span>
+          <button type="button" id="dPlus" aria-label="Increase">+</button>
+        </div>
+        <span class="stock" id="dStock"></span>
+      </div>
+      <button class="btn cham" type="button" id="dAdd">Add to cart</button>
+    </div>
+  </div>
+</dialog>
+
+<div class="scrim" id="scrim"></div>
+
+<aside class="drawer" id="drawer" aria-label="Cart">
+  <div class="drawer-head"><h3>Your cart</h3><button class="x" id="cClose" type="button" aria-label="Close cart">&#10005;</button></div>
+  <div class="c-list" id="cartList"></div>
+  <div class="drawer-foot">
+    <div class="sum-row"><span>Subtotal</span><b id="cartTotal">Rp 0</b></div>
+    <a class="btn cham" id="goCheckout" href="checkout.html">Checkout</a>
+  </div>
+</aside>
+
+<footer class="foot" id="contact">
+  <div class="giant" aria-label="Anargya" role="img"><span class="gl a1"></span><span class="gl mid"></span><span class="gl a2"></span></div>
+  <nav><a href="index.html">Home</a><a href="about.html">About</a><a href="index.html#cars">Cars</a><a href="achievements.html">Achievements</a><a href="news.html">News</a><a href="shop.html">Shop</a><a href="index.html#sponsors">Sponsors</a><a href="admin.html">Admin</a></nav>
+  <p>anargya.its@gmail.com &nbsp;|&nbsp; Instagram @anargya.its</p>
+  <button class="install-btn" type="button" hidden>Install app</button>
+</footer>
+
+<div class="menu" id="menu" aria-hidden="true">
+  <nav>
+    <a href="index.html">Home</a><a href="about.html">About</a><a href="index.html#cars">Cars</a><a href="achievements.html">Achievements</a><a href="news.html">News</a><a href="shop.html">Shop</a><a href="index.html#sponsors">Sponsors</a><a href="index.html#contact">Contact</a>
+  </nav>
+</div>
+
+<script src="script.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="supabase-config.js"></script>
+<script src="store.js"></script>
+<script src="shop.js"></script>
+</body>
+</html>

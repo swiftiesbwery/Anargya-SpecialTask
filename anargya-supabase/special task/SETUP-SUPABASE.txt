@@ -1,0 +1,29 @@
+SETUP SUPABASE - ANARGYA ITS EV TEAM
+
+1. Buat project di Supabase.
+2. Buka SQL Editor > New snippet.
+3. Copy SEMUA isi file supabase.sql ke editor.
+4. Klik Run.
+5. Buka Authentication > Users > Add user.
+   Buat satu akun admin, misalnya:
+   Email: admin@anargya.test
+   Password: buat password sendiri.
+6. Buka Project Settings > API.
+7. Salin Project URL dan Publishable/anon key.
+8. Buka supabase-config.js.
+9. Ganti:
+   window.SUPABASE_URL = 'https://YOUR-PROJECT.supabase.co';
+   window.SUPABASE_ANON_KEY = 'YOUR_SUPABASE_PUBLISHABLE_OR_ANON_KEY';
+10. Jangan masukkan service_role/secret key ke frontend atau GitHub.
+11. Jalankan website melalui hosting/local server (jangan double-click file HTML jika browser memblokir module/API).
+12. Buka shop -> checkout untuk tes order.
+13. Buka admin.html dan login menggunakan akun Supabase tadi.
+
+CATATAN:
+- Produk awal 15 item sudah dimasukkan oleh supabase.sql.
+- Cart tetap disimpan di localStorage browser.
+- Order tersimpan di Supabase dan bisa dilihat admin dari device lain.
+- Stok dikurangi oleh function place_order di database, bukan oleh localStorage.
+- Foto produk bawaan tetap berasal dari assets/shop/.
+- Admin CRUD produk menggunakan Supabase Auth.
+- Untuk project demo sekitar 30 hari, konfigurasi ini sengaja dibuat sederhana.

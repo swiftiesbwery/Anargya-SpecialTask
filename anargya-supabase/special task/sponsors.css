@@ -1,0 +1,72 @@
+/* ===== section sponsors di home: hero foto + latar putih + 2 baris berjalan otomatis ===== */
+.sp-section { background: #fff; }
+
+/* hero: judul hijau ala Hall of Fame, foto berwarna yang memudar ke putih di bawah */
+.sp-hero {
+  --ac: #19a574;
+  position: relative; display: grid; justify-items: center; gap: 22px; text-align: center; overflow: hidden;
+  padding: clamp(110px, 14vw, 170px) 20px clamp(150px, 20vw, 280px);
+  background: #fff var(--img) center top / cover no-repeat;
+  color: #fff;
+}
+/* gelapkan foto sedikit supaya teks putih terbaca */
+.sp-hero::before {
+  content: ""; position: absolute; inset: 0; z-index: 0;
+  background:
+    linear-gradient(#070707, rgba(7, 7, 7, 0) clamp(100px, 16vw, 200px)),
+    linear-gradient(rgba(0, 0, 0, .55), rgba(0, 0, 0, .3));
+}
+/* memudar ke putih di bagian bawah, menyatu dengan area logo */
+.sp-hero::after {
+  content: ""; position: absolute; left: 0; right: 0; bottom: -1px; height: 55%; z-index: 0;
+  background: linear-gradient(rgba(255, 255, 255, 0), #fff 92%);
+}
+.sp-hero > * { position: relative; z-index: 1; }
+.sp-hero .car-title { margin-bottom: 0; }
+.sp-hero p { max-width: 640px; margin: 0; font-size: clamp(1rem, 1.6vw, 1.2rem); line-height: 1.6; color: #fff; text-shadow: 0 1px 10px rgba(0, 0, 0, .7); }
+
+/* area logo: putih penuh */
+.sp-wrap { background: #fff; padding: 0 0 clamp(56px, 8vw, 110px); }
+
+/* 2 baris yang berjalan sendiri (baris 2 arah sebaliknya), berhenti saat di-hover */
+.sp-row {
+  overflow: hidden;
+  padding: 14px 0 30px;
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
+}
+.sp-track { display: flex; width: max-content; animation: sp-run 60s linear infinite; }
+.sp-row.rtl .sp-track { animation-direction: reverse; animation-duration: 66s; }
+.sp-row:hover .sp-track { animation-play-state: paused; }
+@keyframes sp-run { to { transform: translateX(-50%); } }
+
+.sp-card {
+  position: relative; flex: 0 0 auto; display: grid; place-items: center;
+  width: 280px; height: 130px; margin-right: clamp(14px, 2vw, 28px);
+  background: #fff; border: 1px solid #ececec; border-radius: 10px; padding: 20px 24px; overflow: hidden;
+  box-shadow: 0 2px 14px rgba(0, 0, 0, .07);
+  transition: transform .35s ease, box-shadow .35s ease;
+}
+.sp-card:hover { transform: translateY(-6px); box-shadow: 0 16px 40px rgba(25, 165, 116, .22); }
+.sp-card img { display: block; width: 100%; height: 100%; object-fit: contain; -webkit-user-drag: none; user-select: none; }
+.sp-card--yellow { background: #fff200; padding: 0; }
+.sp-card--yellow img { object-fit: cover; }
+.sp-name { display: none; font-family: Montserrat, sans-serif; font-weight: 800; font-size: clamp(1rem, 1.6vw, 1.3rem); line-height: 1.15; text-align: center; color: #111; }
+.sp-card.no-img .sp-name { display: block; }
+
+.sp-cta { margin-top: clamp(24px, 4vw, 56px); padding: 0 16px; text-align: center; display: grid; gap: 18px; justify-items: center; }
+.sp-cta p { color: #555; max-width: none; }
+.sp-wrap .btn { border-color: #111; color: #111; }
+.sp-wrap .btn:hover { background: #111; color: #fff; }
+
+@media (max-width: 600px) {
+  .sp-card { width: 210px; height: 105px; padding: 14px 18px; }
+  .sp-track { animation-duration: 45s; }
+  .sp-row.rtl .sp-track { animation-duration: 50s; }
+}
+/* kalau user mematikan animasi: berhenti jalan, tapi baris tetap bisa digeser manual */
+@media (prefers-reduced-motion: reduce) {
+  .sp-card { transition: none; }
+  .sp-track { animation: none; }
+  .sp-row { overflow-x: auto; }
+}

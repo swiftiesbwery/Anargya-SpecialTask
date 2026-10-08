@@ -1,0 +1,19 @@
+/* Wordmark ANARGYA di footer: A miring awal & akhir hijau, sisanya putih (tanpa hover) */
+.giant {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1768 / 253;
+  font-size: 0;
+  color: transparent;
+  -webkit-text-stroke: 0;
+  user-select: none;
+}
+.giant .gl {
+  position: absolute;
+  top: 0;
+  height: 100%;
+  background: center / 100% 100% no-repeat;
+}
+.giant .gl.a1  { left: 0;      width: 13.74%; background-image: url("assets/footer/a1-green.png"); }
+.giant .gl.mid { left: 13.69%; width: 73.02%; background-image: url("assets/footer/mid-white.png"); }
+.giant .gl.a2  { left: 86.65%; width: 13.35%; background-image: url("assets/footer/a2-green.png"); }

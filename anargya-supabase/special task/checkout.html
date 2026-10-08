@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Checkout | Anargya ITS EV Team</title>
+  <meta name="theme-color" content="#000000">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="apple-touch-icon" href="assets/icons/icon-192.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Montserrat:wght@300;500;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="logo.css">
+  <link rel="stylesheet" href="pages.css">
+   <link rel="stylesheet" href="footer-wordmark.css">
+   </head>
+<body>
+
+<header class="top" id="top">
+  <button class="menu-btn" id="menuBtn" aria-label="Open menu" aria-expanded="false">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M4 8h16M4 16h16"/></svg>
+    <span>Menu</span>
+  </button>
+  <a class="logo" href="index.html#home" aria-label="Anargya home">
+    <img src="assets/logo-anargya.png" alt="Anargya ITS Formula EV Team">
+  </a>
+</header>
+
+<main class="pg">
+  <section class="ach-hero"><h1 class="car-title cham">Checkout</h1></section>
+  <section class="co" id="coWrap">
+    <form class="form" id="coForm" novalidate>
+      <h3>Delivery details</h3>
+      <label class="field">Full name<input name="name" type="text" required autocomplete="on"><span class="err" data-err="name"></span></label><label class="field">Phone / WhatsApp<input name="phone" type="tel" required autocomplete="on"><span class="err" data-err="phone"></span></label><label class="field">Email<input name="email" type="email" required autocomplete="on"><span class="err" data-err="email"></span></label><label class="field">Address<input name="address" type="text" required autocomplete="on"><span class="err" data-err="address"></span></label>
+      <div class="row2"><label class="field">City<input name="city" type="text" required autocomplete="on"><span class="err" data-err="city"></span></label><label class="field">Postal code<input name="postal" type="text" autocomplete="on"><span class="err" data-err="postal"></span></label></div>
+      <label class="field">Order note (optional)<textarea name="note" rows="3"></textarea></label>
+      <h3>Payment method</h3>
+      <label class="radio"><input type="radio" name="payment" value="Bank transfer" checked><span><b>Bank transfer</b><i>The team sends the payment details after you order.</i></span></label>
+      <label class="radio"><input type="radio" name="payment" value="COD"><span><b>Cash on delivery</b><i>Pay when the order arrives.</i></span></label>
+      <button class="btn cham" type="submit">Place order</button>
+      <p class="note">No online payment is taken on this site. The team confirms every order manually.</p>
+    </form>
+    <aside class="co-sum">
+      <h3>Order summary</h3>
+      <div id="sumLines"></div>
+      <div class="sum-row"><span>Subtotal</span><b id="sumTotal">Rp 0</b></div>
+      <p class="note">Shipping is calculated and confirmed by the team.</p>
+      <a class="ul" href="shop.html?cart=1">Edit cart</a>
+    </aside>
+  </section>
+  <section class="co-state" id="coEmpty" hidden><h2>Your cart is empty</h2><p>Add something from the shop first.</p><a class="btn cham" href="shop.html">Go to the shop</a></section>
+  <section class="co-state" id="done" hidden>
+    <small class="ok">Order received</small>
+    <h2>Thank you! Your order number is <span id="doneId"></span></h2>
+    <p id="donePay"></p>
+    <ul class="plain" id="doneItems"></ul>
+    <div class="sum-row"><span>Total</span><b id="doneTotal"></b></div>
+    <a class="btn cham" href="shop.html">Back to the shop</a>
+  </section>
+</main>
+
+<footer class="foot" id="contact">
+     <div class="giant" aria-label="Anargya" role="img"><span class="gl a1"></span><span class="gl mid"></span><span class="gl a2"></span></div>
+  <nav><a href="index.html">Home</a><a href="about.html">About</a><a href="index.html#cars">Cars</a><a href="achievements.html">Achievements</a><a href="shop.html">Shop</a><a href="index.html#sponsors">Sponsors</a><a href="admin.html">Admin</a></nav>
+  <p>anargya.its@gmail.com &nbsp;|&nbsp; Instagram @anargya.its</p>
+  <button class="install-btn" type="button" hidden>Install app</button>
+</footer>
+
+<div class="menu" id="menu" aria-hidden="true">
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="about.html">About</a>
+    <a href="index.html#cars">Cars</a>
+    <a href="achievements.html">Achievements</a>
+    <a href="shop.html">Shop</a>
+    <a href="index.html#sponsors">Sponsors</a>
+    <a href="index.html#contact">Contact</a>
+  </nav>
+</div>
+
+<script src="script.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="supabase-config.js"></script>
+<script src="store.js"></script>
+<script src="checkout.js"></script>
+</body>
+</html>
