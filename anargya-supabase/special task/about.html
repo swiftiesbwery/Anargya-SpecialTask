@@ -16,6 +16,8 @@
   <link rel="stylesheet" href="news.css">
    <link rel="stylesheet" href="footer-wordmark.css">
       <link rel="stylesheet" href="loader.css">
+      <link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#000000">
    </head>
 <body>
 
@@ -155,6 +157,13 @@ document.getElementById("msgForm").addEventListener("submit",function(e){e.preve
 </script>
 
  <script src="loader.js"></script>
+ <script>
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('./sw.js').catch(console.error);
+    });
+  }
+</script>
  
 </body>
 </html>

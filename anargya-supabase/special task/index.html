@@ -17,6 +17,8 @@
   <link rel="stylesheet" href="footer-wordmark.css">
   <link rel="stylesheet" href="ach-hero.css">
   <link rel="stylesheet" href="loader.css">
+  <link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#000000">
 </head>
 <body>
 
@@ -260,5 +262,12 @@
 
 <script src="script.js"></script>
 <script src="loader.js"></script>
+<script>
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('./sw.js').catch(console.error);
+    });
+  }
+</script>
 </body>
 </html>
