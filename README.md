@@ -1,282 +1,244 @@
-# Anargya ITS EV Team — Website, Shop & PWA
+# Anargya ITS EV Team
 
-> 🌐 **Sudah ter-deploy dan bisa diakses di: [https://its.id/m/anargyaura](https://its.id/m/anargyaura)**
+Website profil **Anargya ITS EV Team** yang dibuat untuk menampilkan informasi tim, prestasi, program, berita, dan kontak. Website ini juga memiliki fitur shop untuk katalog merchandise, keranjang belanja, checkout, serta halaman admin untuk mengelola produk dan pesanan.
 
-Website profil tim **Anargya ITS EV Team** yang dilengkapi halaman informasi, katalog merchandise, keranjang, checkout demo, halaman admin, loading screen, dan dukungan Progressive Web App (PWA).
+**Website:** [https://its.id/m/anargyaura](https://its.id/m/anargyaura)
 
-> **Status:** Alur utama (katalog produk, keranjang, checkout, penyimpanan order ke Supabase, dan panel admin) sudah diuji dan berjalan. Ringkasan hasil pengujian ada di bagian [Status pengujian dan keamanan](#9-status-pengujian-dan-keamanan).
+## 1. Gambaran Website
 
-## Daftar isi
+Anargya ITS EV Team merupakan website yang menggabungkan informasi mengenai tim dengan fitur katalog merchandise. Pengunjung bisa mengenal tim melalui beberapa halaman yang tersedia, kemudian melihat produk dan mencoba proses pemesanan melalui halaman Shop.
 
-1. [Ringkasan](#1-ringkasan)
-2. [Teknologi yang digunakan](#2-teknologi-yang-digunakan)
-3. [Struktur folder](#3-struktur-folder)
-4. [Persyaratan perangkat](#4-persyaratan-perangkat)
-5. [Menjalankan secara lokal](#5-menjalankan-website-secara-lokal)
-6. [Menjalankan dari device lain & deploy](#6-menjalankan-dari-device-lain-dan-deploy)
-7. [Konfigurasi Supabase dan database](#7-konfigurasi-supabase-dan-database)
-8. [Fitur dan cara mengetes](#8-fitur-dan-cara-mengetes)
-9. [Status pengujian dan keamanan](#9-status-pengujian-dan-keamanan)
-10. [Loading screen](#10-loading-screen)
-11. [Troubleshooting](#11-troubleshooting)
-12. [Batasan yang diketahui](#12-batasan-yang-diketahui)
-13. [Checklist kelengkapan project](#13-checklist-kelengkapan-project)
+Website ini dibuat menggunakan HTML, CSS, dan JavaScript tanpa framework frontend. Untuk menyimpan data produk dan pesanan, website terhubung dengan Supabase. Selain itu, website dilengkapi loading screen dan fitur Progressive Web App (PWA).
 
-## 1. Ringkasan
+Fitur yang tersedia meliputi:
 
-| Item | Keterangan |
+- Halaman profil tim dan informasi umum.
+- Halaman pencapaian atau achievements.
+- Halaman Academy, News, dan Contact.
+- Katalog merchandise beserta informasi stok.
+- Keranjang belanja dan halaman checkout.
+- Panel admin untuk mengelola produk dan melihat pesanan.
+- Loading screen saat membuka atau berpindah halaman.
+- PWA dengan manifest, service worker, dan halaman offline.
+- Tampilan responsif untuk desktop maupun perangkat mobile.
+
+## 2. Teknologi yang Digunakan
+
+Teknologi yang digunakan disesuaikan dengan kebutuhan website, mulai dari menampilkan informasi hingga mengelola data produk dan pesanan.
+
+| Teknologi | Penggunaan |
 |---|---|
-| **Link live** | https://its.id/m/anargyaura |
-| **Jenis project** | Website statis (HTML, CSS, JavaScript) + Supabase |
-| **Halaman utama** | Beranda, About, Achievements, Academy, News, Contact, Shop, Checkout, Admin |
-| **PWA** | Ya (manifest, service worker, halaman offline) |
-| **Pembayaran** | Belum ada payment gateway (checkout bersifat demo) |
-| **Folder website** | `anargya-supabase/special task/` |
+| HTML5 | Membuat struktur setiap halaman website |
+| CSS3 | Mengatur tampilan, layout, animasi, dan responsivitas |
+| JavaScript | Menangani interaksi dan proses pada website |
+| Supabase | Menyimpan data produk dan pesanan |
+| PostgreSQL | Database yang digunakan melalui Supabase |
+| Supabase Auth | Menangani login admin |
+| localStorage | Menyimpan keranjang dan cache produk di browser |
+| sessionStorage | Menyimpan informasi sesi untuk konfirmasi pesanan |
+| Service Worker | Menangani cache dan dukungan akses offline |
+| PWA Manifest | Mengatur informasi dan ikon aplikasi |
 
-### Fitur utama
+Website menggunakan Google Fonts, yaitu Inter dan Montserrat, untuk mendukung tampilan antarmuka.
 
-- **Website profil tim** — beranda, about, achievements, academy, news, dan contact.
-- **Katalog merchandise** — produk dan stok dibaca langsung dari database Supabase.
-- **Keranjang dan checkout** — keranjang tersimpan di browser; order disimpan ke Supabase melalui fungsi database `place_order` dan mengurangi stok otomatis.
-- **Panel admin** — login admin (Supabase Auth) untuk mengelola produk dan melihat order, dengan pembatasan akses melalui Row Level Security (RLS).
-- **Progressive Web App (PWA)** — dapat di-install dan memiliki halaman offline.
-- **Loading screen** — animasi pemuatan bertema Anargya saat halaman dibuka dan saat berpindah halaman.
-- **Desain responsif** — tampilan menyesuaikan layar mobile, tablet, dan desktop.
+## 3. Struktur Folder
 
-## 2. Teknologi yang digunakan
-
-- **Frontend:** HTML5, CSS3, dan JavaScript vanilla (tanpa framework frontend).
-- **Font:** Google Fonts — Inter dan Montserrat.
-- **Database/backend-as-a-service:** Supabase, yang menyediakan PostgreSQL dan Supabase Auth.
-- **Client database:** `@supabase/supabase-js` v2 melalui CDN.
-- **Penyimpanan browser:** `localStorage` untuk keranjang dan cache data produk lokal; `sessionStorage` untuk menampilkan konfirmasi order terakhir pada sesi browser.
-- **PWA:** `manifest.webmanifest`, `sw.js` (service worker), halaman `offline.html`, serta ikon aplikasi di `assets/icons/`.
-- **Hosting:** dapat dijalankan secara lokal dengan web server statis atau dipublikasikan ke hosting statis yang mendukung HTTPS. Versi live saat ini: https://its.id/m/anargyaura.
-
-Project ini tidak memakai Node.js/npm sebagai keharusan untuk menjalankan frontend, dan tidak memiliki `package.json` pada versi yang disertakan.
-
-## 3. Struktur folder
-
-File website berada di:
+Seluruh file website berada di folder `anargya-supabase/special task/`.
 
 ```text
-anargya-supabase/special task/
-├── index.html                 # Halaman utama
-├── about.html                 # Profil/tim
-├── achievements.html          # Prestasi
-├── academy.html               # Academy/program
-├── news.html                  # Berita
-├── contact.html               # Kontak
-├── shop.html                  # Katalog merchandise
-├── checkout.html              # Keranjang/checkout
-├── admin.html                 # Login dan panel admin
-├── style.css                  # Gaya halaman utama
-├── pages.css                  # Gaya halaman lainnya
-├── loader.css                 # Gaya loading screen
-├── loader.js                  # Logika loading screen (HTML loader disisipkan otomatis)
-├── script.js                  # Interaksi umum dan registrasi service worker
-├── store.js                   # Logika produk, cart, checkout, dan Supabase
+special task/
+├── index.html
+├── about.html
+├── achievements.html
+├── academy.html
+├── news.html
+├── contact.html
+├── shop.html
+├── checkout.html
+├── admin.html
+├── style.css
+├── pages.css
+├── loader.css
+├── loader.js
+├── script.js
+├── store.js
 ├── shop.js
 ├── checkout.js
 ├── admin.js
-├── supabase-config.js         # URL project dan public key Supabase
-├── supabase.sql               # Skema awal dan data produk
-├── supabase-admin.sql         # Tambahan aturan admin (perlu ditinjau; lihat catatan)
-├── manifest.webmanifest       # Metadata PWA
-├── sw.js                      # Cache/offline behavior
+├── supabase-config.js
+├── supabase.sql
+├── supabase-admin.sql
+├── manifest.webmanifest
+├── sw.js
 ├── offline.html
-└── assets/                    # Foto, logo, ikon, dan gambar merchandise
+└── assets/
+    ├── icons/
+    └── ...
 ```
 
-## 4. Persyaratan perangkat
+Berikut fungsi beberapa file utama:
 
-- Browser modern (Chrome, Edge, Firefox, atau Safari).
-- Koneksi internet untuk memuat Google Fonts, CDN Supabase, serta mengakses database cloud.
-- Python 3 **atau** ekstensi VS Code Live Server untuk menjalankan web server lokal.
-- Akun Supabase untuk membuat/mengelola database jika belum memiliki project yang aktif.
+- `index.html` menjadi halaman beranda website.
+- `about.html` dan `achievements.html` menampilkan informasi tim dan pencapaiannya.
+- `shop.html` menampilkan katalog merchandise.
+- `checkout.html` menangani keranjang dan proses pemesanan.
+- `admin.html` menyediakan halaman login dan pengelolaan toko.
+- `store.js` mengatur proses pengambilan data, keranjang, checkout, dan komunikasi dengan Supabase.
+- `shop.js`, `checkout.js`, dan `admin.js` menangani fungsi khusus pada masing-masing halaman.
+- `loader.js` dan `loader.css` mengatur loading screen.
+- `manifest.webmanifest` dan `sw.js` mendukung fitur PWA.
+- `supabase-config.js` berisi konfigurasi koneksi ke Supabase.
+- `supabase.sql` berisi skrip pembuatan tabel dan data awal.
 
-Untuk akses dari device berbeda, setiap device cukup membuka alamat live (https://its.id/m/anargyaura) atau alamat IP komputer server yang dapat dijangkau di jaringan yang sama. Data di Supabase tersimpan di cloud dan dapat diakses lintas device; data `localStorage` tidak otomatis berpindah antar-browser/device.
+## 4. Cara Menjalankan Website
 
-## 5. Menjalankan website secara lokal
+### Menjalankan secara lokal
 
-### Opsi A — VS Code Live Server
+Website bisa dijalankan melalui VS Code menggunakan ekstensi Live Server.
 
-1. Ekstrak ZIP project.
-2. Buka folder `anargya-supabase/special task/` di VS Code.
-3. Pasang ekstensi **Live Server** jika belum tersedia.
-4. Klik kanan `index.html` → **Open with Live Server**.
-5. Browser akan membuka alamat lokal, biasanya seperti `http://127.0.0.1:5500`.
+1. Buka folder `anargya-supabase/special task/` di VS Code.
+2. Pastikan file `index.html` berada di folder yang dibuka.
+3. Klik kanan `index.html`.
+4. Pilih **Open with Live Server**.
+5. Website akan terbuka di browser melalui alamat lokal, biasanya `http://127.0.0.1:5500`.
 
-### Opsi B — Python
-
-Pastikan terminal berada di folder `anargya-supabase/special task/`, lalu jalankan:
+Alternatifnya, jalankan perintah berikut melalui terminal yang sudah berada di folder website:
 
 ```bash
 python -m http.server 5500
 ```
 
-Jika perintah `python` tidak tersedia, coba `py -m http.server 5500` di Windows atau `python3 -m http.server 5500` di macOS/Linux. Buka `http://localhost:5500` di browser.
+Kemudian buka `http://localhost:5500` di browser.
 
-> Jangan hanya membuka file dengan double-click (`file://`). Jalankan melalui HTTP/HTTPS agar perilaku JavaScript dan service worker lebih konsisten.
+### Mengakses website yang sudah di-deploy
 
-## 6. Menjalankan dari device lain dan deploy
+Website dapat diakses langsung melalui:
 
-### a. Mengakses versi live
+[https://its.id/m/anargyaura](https://its.id/m/anargyaura)
 
-Cukup buka **https://its.id/m/anargyaura** dari browser device mana pun. Tidak perlu instalasi apa pun.
+Dengan versi online ini, pengunjung tidak perlu mengunduh project atau menjalankan server lokal.
 
-### b. Mencoba di jaringan Wi-Fi yang sama (versi lokal)
+## 5. Integrasi Database Supabase
 
-1. Jalankan server lokal seperti langkah sebelumnya.
-2. Cari alamat IP lokal komputer yang menjalankan server:
-   - Windows: `ipconfig`, lalu cari IPv4 Address pada adapter Wi-Fi.
-   - macOS/Linux: `ifconfig` atau `ip addr`.
-3. Dari device lain yang tersambung ke Wi-Fi yang sama, buka `http://IP-KOMPUTER:5500`.
-4. Jika tidak bisa diakses, periksa firewall dan pastikan server mendengarkan pada interface jaringan, bukan hanya loopback. Jangan membuka port ini ke internet publik.
+Supabase digunakan untuk menyimpan data yang perlu diakses oleh website, terutama data produk, stok, dan pesanan. Dengan begitu, data tersebut tidak hanya bergantung pada penyimpanan di browser.
 
-Contoh format alamat: `http://192.168.1.10:5500` — ganti IP contoh tersebut dengan IP komputer sendiri.
+Tabel `products` digunakan untuk menyimpan informasi merchandise, sedangkan tabel `orders` digunakan untuk menyimpan pesanan yang masuk.
 
-**Catatan PWA:** service worker dan fitur instalasi PWA umumnya memerlukan HTTPS, dengan pengecualian `localhost`. Akses melalui IP lokal dengan HTTP mungkin membuat PWA tidak bisa di-install atau service worker tidak berjalan. Untuk menguji PWA lintas device, gunakan versi live yang sudah HTTPS.
+Pada halaman Shop, data produk diambil dari Supabase dan ditampilkan sebagai katalog. Ketika pengunjung menambahkan produk ke keranjang, data keranjang disimpan di `localStorage`. Keranjang ini tetap tersedia ketika halaman dimuat ulang pada browser yang sama.
 
-### c. Deploy ulang atau deploy ke hosting lain
+Saat checkout dilakukan, website memanggil fungsi database `place_order` untuk menyimpan pesanan sekaligus mengurangi stok produk. Proses ini menghubungkan aktivitas pengunjung di halaman Shop dengan data yang tersimpan di database.
 
-1. Push project ke repository Git (pastikan tidak menyertakan secret).
-2. Deploy ke static hosting seperti GitHub Pages, Netlify, atau Vercel.
-3. **Arahkan folder publish ke folder yang berisi `index.html`**, yaitu:
-   ```text
-   anargya-supabase/special task
-   ```
-   Build command dikosongkan karena ini website statis.
-4. Gunakan URL HTTPS hasil deployment di setiap device.
-5. Pastikan konfigurasi Supabase di deployment mengarah ke project cloud yang benar.
-6. Jika memakai login Supabase Auth, tambahkan URL deployment ke **Authentication → URL Configuration** (Site URL dan Redirect URLs) di dashboard Supabase.
+Berikut pembagian penyimpanan yang digunakan:
 
-Static hosting hanya meng-host file website. Database Supabase tetap berada di project Supabase dan tidak ikut tersimpan di folder website.
-
-## 7. Konfigurasi Supabase dan database
-
-### Di mana database disimpan?
-
-Database yang dirancang project ini adalah **PostgreSQL pada Supabase cloud**, bukan database lokal di laptop dan bukan file database di folder project. File `supabase.sql` adalah skrip untuk membuat tabel dan memasukkan data awal; file itu bukan database aktif itu sendiri.
-
-### Membuat/menghubungkan project Supabase
-
-1. Buat atau buka project di dashboard Supabase.
-2. Buka **SQL Editor**.
-3. **Sebelum menjalankan SQL**, ketahui bahwa skrip utama (`supabase.sql`) berisi perintah `DROP TABLE ... CASCADE` untuk tabel `orders` dan `products`. Menjalankannya ulang pada database yang sudah berisi data akan menghapus data tersebut, jadi lakukan backup terlebih dahulu.
-4. Jalankan skrip skema di SQL Editor pada project yang baru/kosong.
-5. Buat user admin melalui **Authentication → Users**.
-6. Ambil **Project URL** dan **Publishable key** (atau legacy `anon` key) dari pengaturan/API project Supabase.
-7. Buka `supabase-config.js`, lalu isi dengan nilai project milikmu:
-
-```js
-window.SUPABASE_URL = 'https://PROJECT-REF.supabase.co';
-window.SUPABASE_ANON_KEY = 'YOUR_PUBLISHABLE_OR_ANON_KEY';
-window.supabaseClient = window.supabase.createClient(
-  window.SUPABASE_URL,
-  window.SUPABASE_ANON_KEY
-);
-```
-
-Gunakan nilai asli dari dashboard Supabase, bukan teks contoh di atas. Setelah disimpan, deploy ulang file website.
-
-### Connection string
-
-Frontend saat ini **tidak memakai PostgreSQL connection string langsung**. Browser berkomunikasi dengan Supabase melalui **Project URL + publishable/anon key** dan library `supabase-js`. Connection string PostgreSQL (yang berisi host, database, user, dan password) hanya diperlukan untuk tool backend/database seperti `psql` atau database client. **Jangan** taruh connection string ber-password atau `service_role` key di JavaScript frontend maupun repository publik.
-
-### Data yang tersimpan di mana?
-
-| Data | Lokasi |
+| Data | Tempat penyimpanan |
 |---|---|
-| Produk dan stok | Tabel `products` di Supabase, dibaca ke browser |
-| Order/pesanan | Fungsi database `place_order` menyimpan pesanan dan mengurangi stok |
-| Keranjang | `localStorage` browser (tidak sinkron antar-device) |
-| Cache produk | `localStorage` browser, diperbarui saat data berhasil diambil dari Supabase |
-| Order terakhir (halaman konfirmasi) | `localStorage` + ID sesi di `sessionStorage`; sumber order lintas-device seharusnya database |
-| Gambar | Folder `assets/`; kolom gambar di database menyimpan path relatif |
+| Informasi produk | Tabel `products` di Supabase |
+| Stok produk | Tabel `products` di Supabase |
+| Pesanan | Tabel `orders` melalui fungsi `place_order` |
+| Keranjang belanja | `localStorage` pada browser |
+| Cache produk | `localStorage` pada browser |
+| Gambar dan ikon | Folder `assets/` |
 
-## 8. Fitur dan cara mengetes
+### Konfigurasi Supabase
 
-1. Buka `index.html` (atau https://its.id/m/anargyaura) untuk halaman profil.
-2. Perhatikan **loading screen** yang tampil saat halaman dimuat.
-3. Navigasikan ke halaman **Shop** untuk melihat katalog.
-4. Tambahkan barang ke keranjang dan buka **Checkout**.
-5. Checkout memanggil RPC `place_order` pada Supabase dan order tersimpan di database. Karena belum ada payment gateway, ini adalah alur **pemesanan demo**, bukan transaksi pembayaran sungguhan.
-6. Buka `admin.html`, login dengan akun admin, lalu cek daftar order dan pengelolaan produk.
-7. Untuk PWA, buka website melalui HTTPS, lalu cek menu install browser. Uji halaman offline setelah website pernah dibuka saat online.
+Koneksi ke database diatur melalui file `supabase-config.js`. File ini menggunakan Project URL dan publishable key atau anon key dari project Supabase yang digunakan.
 
-Tidak ada integrasi payment gateway pada file yang diperiksa. Pilihan metode pembayaran di checkout hanya data pesanan/demo, bukan proses pembayaran otomatis.
+Skrip SQL yang tersedia dapat digunakan untuk menyiapkan tabel dan data awal. Namun, skrip tersebut perlu diperiksa sebelum dijalankan pada database yang sudah digunakan karena beberapa perintah dapat menghapus tabel beserta datanya.
 
-## 9. Status pengujian dan keamanan
+Publishable key digunakan untuk koneksi frontend, sedangkan secret key dan `service_role` key tidak boleh dimasukkan ke dalam kode frontend atau repository publik.
 
-Berikut hasil pengujian alur utama berdasarkan pengujian langsung oleh pengembang pada versi yang ter-deploy:
+## 6. Fitur Website
 
-| Area | Hasil |
+### Halaman profil tim
+
+Halaman utama menjadi titik awal untuk mengenal Anargya ITS EV Team. Navigasi website menghubungkan pengunjung ke halaman informasi lainnya, termasuk profil tim, pencapaian, Academy, News, dan Contact.
+
+Halaman-halaman tersebut dipisahkan agar informasi lebih mudah ditemukan dan tidak menumpuk dalam satu halaman.
+
+### Shop dan katalog merchandise
+
+Halaman Shop menampilkan produk merchandise yang tersedia. Informasi produk diambil dari database Supabase, sehingga katalog dapat mengikuti data yang tersimpan di database.
+
+Pengunjung bisa memilih produk dan menambahkannya ke keranjang sebelum melanjutkan ke halaman checkout.
+
+### Keranjang dan checkout
+
+Keranjang digunakan untuk menampung produk yang dipilih pengunjung. Setelah itu, pengunjung dapat melanjutkan ke halaman checkout untuk memasukkan pesanan.
+
+Ketika pesanan berhasil diproses, data order disimpan di Supabase dan stok produk diperbarui. Dengan mekanisme ini, proses pemesanan tidak hanya ditampilkan di halaman website, tetapi juga tercatat di database.
+
+**Catatan:** checkout saat ini masih berupa simulasi pemesanan. Website belum menggunakan payment gateway untuk memproses pembayaran secara nyata.
+
+### Panel admin
+
+Halaman admin digunakan untuk mengelola bagian toko. Admin dapat login menggunakan Supabase Auth, melihat pesanan yang masuk, dan mengelola produk sesuai hak aksesnya.
+
+Pembatasan akses database juga menggunakan Row Level Security (RLS), sehingga operasi yang memerlukan hak admin tidak seharusnya dapat dilakukan oleh pengguna biasa.
+
+Akun admin sebaiknya digunakan secara terpisah dari akun pengunjung dan tidak dicantumkan bersama password di README publik.
+
+### Loading screen
+
+Website memiliki loading screen dengan tema visual Anargya, menggunakan latar gelap, logo, teks berwarna hijau, progress bar, dan persentase pemuatan.
+
+Loading screen muncul ketika halaman dibuka dan ketika pengunjung berpindah melalui tautan internal. Durasi minimum digunakan agar animasi tidak langsung menghilang ketika halaman selesai dimuat terlalu cepat.
+
+Pengaturan animasi juga memperhatikan preferensi `prefers-reduced-motion` pada perangkat pengguna.
+
+### Progressive Web App (PWA)
+
+Website dilengkapi manifest dan service worker agar dapat mendukung fitur PWA. Manifest mengatur nama aplikasi, ikon, serta pengaturan tampilan ketika website dipasang pada perangkat.
+
+Service worker menangani cache untuk mendukung pemuatan halaman tertentu ketika koneksi internet tidak tersedia. Website juga menyediakan `offline.html` sebagai halaman alternatif ketika akses offline diperlukan.
+
+Fitur ini tetap memiliki batasan: tidak semua halaman, gambar, atau data dari Supabase otomatis tersedia secara offline.
+
+## 7. Pengujian Website
+
+Pengujian dilakukan pada fitur utama untuk memastikan alur penggunaan website berjalan sesuai fungsinya.
+
+| Fitur yang diuji | Hasil |
 |---|---|
-| Katalog produk (Shop) | Berjalan, data produk dibaca dari Supabase |
-| Keranjang | Berjalan, disimpan di `localStorage` |
-| Checkout | Berjalan, order tersimpan ke Supabase melalui RPC `place_order` |
-| Stok produk | Berkurang setelah checkout |
-| Struktur data order | Sesuai dengan query pada JavaScript |
-| Panel admin | Login berjalan; order dan produk dapat dikelola |
-| Pembatasan akses admin (RLS) | Operasi admin dibatasi untuk admin yang sah |
+| Membuka halaman utama dan navigasi | Berjalan |
+| Menampilkan katalog produk | Berjalan |
+| Menambahkan produk ke keranjang | Berjalan |
+| Menyimpan keranjang di browser | Berjalan |
+| Memproses checkout demo | Berjalan |
+| Menyimpan pesanan ke Supabase | Berjalan |
+| Memperbarui stok setelah checkout | Berjalan |
+| Login ke panel admin | Berjalan |
+| Mengelola produk dan melihat pesanan | Berjalan |
+| Dukungan PWA dan halaman offline | Perlu diuji pada kondisi perangkat dan jaringan yang berbeda |
 
-### Catatan penting
+Hasil tersebut menggambarkan pengujian alur utama website. Pengujian ini belum berarti seluruh kemungkinan error, kondisi jaringan, atau celah keamanan sudah diperiksa.
 
-- **Skrip `supabase.sql` bersifat destruktif.** Skrip ini berisi `DROP TABLE ... CASCADE` untuk `orders` dan `products`. Jangan dijalankan ulang pada database yang berisi data tanpa backup dan review.
-- **Jangan menaruh `service_role` key atau password database di frontend atau repository.** Frontend hanya memakai Project URL dan publishable/anon key. Keamanan bergantung pada kebijakan Row Level Security (RLS) di database, bukan pada tampilan frontend.
-- **Pembayaran belum nyata.** Metode pembayaran di checkout hanya data pesanan; belum ada payment gateway.
-- **Pengujian lanjutan yang disarankan:** uji alur produk → cart → checkout → stok → daftar order di beberapa browser/device yang berbeda, serta uji beberapa checkout bersamaan untuk memastikan stok tidak negatif.
+## 8. Keamanan dan Batasan
 
-## 10. Loading screen
+Beberapa hal yang perlu diperhatikan dalam penggunaan website:
 
-Website memiliki loading screen bertema Anargya (background gelap, logo, teks hijau, bar progress, dan persentase).
+- Keranjang disimpan di browser, sehingga tidak otomatis tersinkronisasi antarperangkat.
+- Checkout belum terhubung dengan payment gateway.
+- Akses admin bergantung pada konfigurasi autentikasi dan kebijakan RLS di Supabase.
+- Kebijakan database perlu diperiksa agar pengguna biasa tidak dapat mengubah data produk atau mengakses pesanan milik pihak lain tanpa izin.
+- Service worker dapat menyimpan versi lama website. Jika perubahan belum terlihat, lakukan hard refresh menggunakan `Ctrl + F5` atau periksa cache melalui DevTools.
+- Sebagian fitur membutuhkan internet karena website mengambil data dari Supabase dan memuat resource dari CDN.
+- Pengujian keamanan yang lebih menyeluruh tetap diperlukan sebelum website digunakan untuk transaksi nyata.
 
-**Cara kerja**
-- Muncul otomatis saat halaman pertama dimuat; progress naik pelan hingga 90%, lalu menjadi 100% saat halaman selesai dimuat dan loader memudar.
-- Muncul lagi saat pengguna berpindah halaman lewat link internal.
-- Ada durasi tampil minimum (`MIN_MS` di `loader.js`, default 900 ms) agar tidak berkedip pada koneksi cepat.
-- Menghormati pengaturan `prefers-reduced-motion`.
+## 9. Kendala dan Solusi
 
-**Cara memasang di halaman baru**
-
-Di dalam `<head>`:
-
-```html
-<link rel="stylesheet" href="loader.css">
-```
-
-Sebelum `</body>`:
-
-```html
-<script src="loader.js"></script>
-```
-
-**Pemakaian manual** (misalnya untuk proses fetch/AJAX):
-
-```js
-PageLoader.show();
-// ... proses yang butuh waktu
-PageLoader.hide();
-```
-
-**Kustomisasi ukuran:** ubah `width`/`height` pada `.anl-content` dan `.anl-logo` di `loader.css`. Semua class dan ID loader memakai awalan `anl-` agar tidak bentrok dengan CSS website. Untuk mengganti logo, ubah elemen `<svg>` di `loader.js` dengan logo asli, misalnya `<img class="anl-logo" src="assets/logo.svg" alt="">`.
-
-## 11. Troubleshooting
-
-| Masalah | Solusi |
+| Kendala | Solusi |
 |---|---|
-| **"Page not found" setelah deploy** | Publish directory belum menunjuk ke folder yang berisi `index.html`. Isi dengan `anargya-supabase/special task`, lalu deploy ulang. |
-| **Perubahan tidak muncul** | Muat ulang paksa dengan **Ctrl + F5**. Service worker dapat menyimpan cache lama; hapus lewat DevTools → Application → Service Workers → Unregister bila perlu. |
-| **Loader tampil tanpa background / tertimpa style lain** | Pastikan memakai `loader.css` dan `loader.js` versi terbaru (class berawalan `anl-`), lalu muat ulang dengan Ctrl + F5. |
-| **Login admin gagal setelah deploy** | Tambahkan URL deployment ke Site URL dan Redirect URLs di Supabase (Authentication → URL Configuration). |
-| **Produk/stok tidak muncul** | Periksa isi `supabase-config.js` dan pastikan data produk ada di tabel `products` dan kebijakan baca (RLS) mengizinkannya. |
-| **PWA tidak bisa di-install** | Pastikan website dibuka lewat HTTPS dan `manifest.webmanifest` serta `sw.js` dapat diakses. |
+| Perubahan website tidak terlihat | Lakukan hard refresh atau periksa cache service worker |
+| Produk tidak muncul | Periksa konfigurasi Supabase, data pada tabel `products`, dan kebijakan RLS |
+| Login admin gagal setelah deploy | Periksa Site URL dan Redirect URLs pada pengaturan Supabase Auth |
+| Website gagal dibuka setelah deploy | Pastikan folder publik hosting berisi `index.html` |
+| PWA tidak dapat dipasang | Periksa HTTPS, manifest, ikon, dan service worker |
+| Website tidak menampilkan data terbaru | Periksa koneksi database dan cache produk di browser |
 
-## 12. Batasan yang diketahui
+## 10. Kesimpulan
 
-- `localStorage` dan `sessionStorage` berlaku per browser/per device; tidak sama dengan sinkronisasi database.
-- Service worker memberi cache/offline fallback dasar, bukan jaminan seluruh halaman dan seluruh gambar tersedia offline.
-- Website memuat Google Fonts dan Supabase JS dari CDN, sehingga beberapa bagian memerlukan koneksi internet.
-- Project belum memproses pembayaran melalui payment gateway.
-- Alur shop/admin sudah diuji. Karena belum ada pembayaran nyata, checkout bersifat demo dan belum dimaksudkan sebagai toko produksi penuh.
+Website Anargya ITS EV Team dibuat untuk menyediakan informasi tim sekaligus menghadirkan fitur toko merchandise dalam satu website. Selain halaman profil dan pencapaian, website memiliki katalog produk, keranjang, checkout demo, serta panel admin yang terhubung dengan Supabase.
+
+Penggunaan HTML, CSS, dan JavaScript membuat frontend dapat dijalankan melalui web server statis, sedangkan Supabase menangani penyimpanan data produk dan pesanan. Website juga dilengkapi loading screen, tampilan responsif, serta dukungan PWA.
+
+Berdasarkan pengujian alur utama, fitur Shop, keranjang, checkout, penyimpanan pesanan, dan panel admin telah berjalan. Pengembangan berikutnya dapat difokuskan pada integrasi pembayaran nyata, pengujian keamanan lebih lanjut, serta penyempurnaan akses offline agar website lebih siap digunakan di luar kebutuhan demonstrasi.
