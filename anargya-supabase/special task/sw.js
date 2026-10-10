@@ -1,63 +1,94 @@
-const VERSION = 'anargya-v7';
-const CORE = [
-  './', 'index.html', 'about.html', 'achievements.html', 'shop.html', 'checkout.html', 'admin.html', 'offline.html',
-  'style.css', 'logo.css', 'pages.css', 'script.js', 'store.js', 'shop.js', 'checkout.js', 'admin.js',
-  'manifest.webmanifest', 'assets/icons/icon-192.png', 'assets/icons/icon-512.png', 'assets/hero/hero-1.jpg', 'assets/hero/hero-2.jpg', 'assets/mark5.png', 'assets/mark6.png',
-  'assets/shop/anargya-strap.jpg',
-  'assets/shop/keychain-f1-chillguys.jpg',
-  'assets/shop/jersey-gold-thunder.jpg',
-  'assets/shop/workshirt-2025.jpg',
-  'assets/shop/tee-mark4-black.jpg',
-  'assets/shop/keychain-mark1-4.jpg',
-  'assets/shop/tee-black.jpg',
-  'assets/shop/tee-white.jpg',
-  'assets/shop/tee-mark4.jpg',
-  'assets/shop/lanyard.jpg',
-  'assets/shop/keychain.jpg',
-  'assets/shop/sticker-pack.jpg'
+const CACHE = 'anargya-v2';
+
+// Daftar sesuai struktur dari README-mu. Kalau ada file yang tidak ada, dilewati saja.
+const PRECACHE = [
+  './',
+  './index.html',
+  './about.html',
+  './achievements.html',
+  './academy.html',
+  './news.html',
+  './contact.html',
+  './shop.html',
+  './checkout.html',
+  './admin.html',
+  './offline.html',
+  './manifest.json',
+  './style.css',
+  './pages.css',
+  './loader.css',
+  './logo.css',
+  './news.css',
+  './footer-wordmark.css',
+  './loader.js',
+  './script.js',
+  './store.js',
+  './shop.js',
+  './checkout.js',
+  './admin.js',
+  './supabase-config.js',
+  './assets/icons/icon-192.png',
+  './assets/icons/icon-512.png',
+  './assets/icons/icon-maskable-512.png'
 ];
 
-self.addEventListener('install', e => {
+self.addEventListener('install', (e) => {
   e.waitUntil(
-    caches.open(VERSION)
-      .then(c => Promise.allSettled(CORE.map(u => c.add(new Request(u, { cache: 'reload' })))))
-      .then(() => self.skipWaiting())
+    caches.open(CACHE).then((cache) =>
+      // Satu per satu, supaya satu file yang hilang tidak menggagalkan seluruh install
+      Promise.allSettled(
+        PRECACHE.map((url) =>
+          cache.add(url).catch((err) => console.warn('SW: gagal cache', url, err))
+        )
+      )
+    )
   );
+  self.skipWaiting();
 });
 
-self.addEventListener('activate', e => {
+self.addEventListener('activate', (e) => {
   e.waitUntil(
-    caches.keys().then(keys => Promise.all(keys.filter(k => k !== VERSION).map(k => caches.delete(k))))
-      .then(() => self.clients.claim())
+    caches.keys().then((keys) =>
+      Promise.all(keys.filter((k) => k !== CACHE).map((k) => caches.delete(k)))
+    )
   );
+  self.clients.claim();
 });
 
-self.addEventListener('fetch', e => {
+self.addEventListener('fetch', (e) => {
   const req = e.request;
-  if (req.method !== 'GET') return;
-  const url = new URL(req.url);
-  if (url.protocol !== 'http:' && url.protocol !== 'https:') return;
-  if (req.destination === 'video' || /\.(mp4|webm)$/i.test(url.pathname) || req.headers.has('range')) return;
 
+  // Hanya GET dan satu origin. Supabase, CDN, dan Google Fonts dilewati.
+  if (req.method !== 'GET' || !req.url.startsWith(self.location.origin)) return;
+
+  // Halaman: network-first, fallback cache, lalu offline.html
   if (req.mode === 'navigate') {
     e.respondWith(
       fetch(req)
-        .then(res => {
-          if (res.ok) { const copy = res.clone(); caches.open(VERSION).then(c => c.put(req, copy)); }
+        .then((res) => {
+          const copy = res.clone();
+          caches.open(CACHE).then((c) => c.put(req, copy));
           return res;
         })
-        .catch(() => caches.match(req, { ignoreSearch: true }).then(r => r || caches.match('offline.html')))
+        .catch(() =>
+          caches.match(req).then((r) => r || caches.match('./offline.html'))
+        )
     );
     return;
   }
 
+  // Aset lain: cache-first, simpan otomatis yang belum ada
   e.respondWith(
-    caches.match(req).then(cached => {
-      const net = fetch(req).then(res => {
-        if (res && (res.ok || res.type === 'opaque')) { const copy = res.clone(); caches.open(VERSION).then(c => c.put(req, copy)); }
-        return res;
-      }).catch(() => cached);
-      return cached || net;
-    })
+    caches.match(req).then(
+      (cached) =>
+        cached ||
+        fetch(req).then((res) => {
+          if (res && res.status === 200) {
+            const copy = res.clone();
+            caches.open(CACHE).then((c) => c.put(req, copy));
+          }
+          return res;
+        })
+    )
   );
 });
